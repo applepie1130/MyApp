@@ -1,20 +1,20 @@
 <!doctype html>
 <head>
-	<meta http-equiv="Refresh" content="100" />
+	<!-- <meta http-equiv="Refresh" content="100" />  -->
 	
 	<link rel="stylesheet" href="/resources/lib/css/common.css"></link>
-	<link rel="stylesheet" href="/resources/lib/css/jquery.dataTables_themeroller.css"></link>
-	<link rel="stylesheet" href="/resources/lib/css/jquery.dataTables.css"></link>
 	<link rel="stylesheet" href="/resources/lib/css/jquery.dataTables.min.css"></link>
 	<link rel="stylesheet" href="/resources/lib/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/resources/lib/css/bootstrap-theme.min.css">
 	
 	<script type="text/javascript" src="/resources/lib/js/jquery-2.1.1.min.js"></script>
-	<script type="text/javascript" src="/resources/lib/js/spin.min.js"></script>
-	<script type="text/javascript" src="/resources/lib/js/common.js"></script>
-	<script type="text/javascript" src="/resources/lib/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="/resources/lib/js/jquery.dataTables.js"></script>
+	<script type="text/javascript" src="/resources/lib/js/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="/resources/lib/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="/resources/lib/js/jquery.fileupload.js"></script>
+	<script type="text/javascript" src="/resources/lib/js/spin.min.js"></script>
+	<script type="text/javascript" src="/resources/lib/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/resources/lib/js/common.js"></script>
+	
 	<title>Home</title>
+	
 </head>
 #parse( "/common/spinner.vm" )

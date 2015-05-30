@@ -1,9 +1,13 @@
 package com.myapp.test;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -22,6 +26,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.myapp.comm.BusinessException;
 import com.myapp.comm.CommonService;
@@ -167,4 +173,49 @@ public class TestService extends CommonService {
 		
 		return rRtnData;
 	}
+	
+	
+	/**
+	 * @Desc	: 파일업로드 테스트
+	 * @Author	: 김성준
+	 * @Create	: 2015년 05월 30일 
+	 * @stereotype ServiceMethod
+	 */
+	public Map saveFileUpload(Map paramMap) {
+		MultipartHttpServletRequest request = (MultipartHttpServletRequest) paramMap.get("request");
+		Map mRtnData = new HashMap<String, Object>();
+		
+		Date date = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyyMMddHHmmss");
+		String sFilePath = "/batch/data/MyApp/file/";
+		Iterator<String> itr =  request.getFileNames();
+		
+        if ( itr.hasNext() ) {
+            MultipartFile file = request.getFile(itr.next());
+            
+            String sOrgFileNm = file.getOriginalFilename();
+            String sOrgType = file.getContentType();
+            String sFileName = dateFormat.format(date) + sOrgFileNm.substring(sOrgFileNm.lastIndexOf(".")).toLowerCase();
+            long nFileSize = file.getSize();
+            
+        	if ( !file.isEmpty() ) {
+                try {
+                    byte[] bytes = file.getBytes();
+                    BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(sFilePath + sFileName)));
+                    stream.write(bytes);
+                    stream.close();
+                    
+                } catch (Exception e) {
+                	throw new BusinessException("파일업로드 중 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.", paramMap);
+                }
+            }
+        	
+        	mRtnData.put("fileType", sOrgType);
+        	mRtnData.put("fileName", sFileName);
+        	mRtnData.put("fileSize", nFileSize);
+        }
+		
+        return mRtnData;
+	}
+	
 }

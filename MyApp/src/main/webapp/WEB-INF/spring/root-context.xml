@@ -86,6 +86,14 @@
 	</bean>
 	<!-- [E] Spring Mail Sender -->
 	
+	<!-- [S] File Upload Conf -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize">
+			<value>102400000</value>
+		</property>
+	</bean>
+	<!-- [E] File Upload Conf -->
+	
 	<!-- [S] Common.cfg Bean -->
 	<bean id="commonConfig" class="com.myapp.comm.CommonConfig">
 		<property name="serviceShutDownStartDt" value="${service.shutDownStartDt}" />

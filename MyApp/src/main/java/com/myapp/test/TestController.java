@@ -2,8 +2,6 @@ package com.myapp.test;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.myapp.comm.BusinessException;
@@ -175,9 +174,9 @@ public class TestController {
 	public @ResponseBody Map saveSendMail(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		
-		Map rRtnData  = mailSvc.sendMail(paramMap);
+		Map mRtnData  = mailSvc.sendMail(paramMap);
 		
-		return rRtnData;
+		return mRtnData;
 	}
 	
 	/**
@@ -190,11 +189,11 @@ public class TestController {
 	public @ResponseBody Map findBeanConfigure(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		
-		Map rRtnData = new HashMap<String, Object>();
-		rRtnData.put("serviceShutDownStartDt", commonConfig.getServiceShutDownStartDt());
-		rRtnData.put("serviceShutDownEndDt", commonConfig.getServiceShutDownEndDt());
+		Map mRtnData = new HashMap<String, Object>();
+		mRtnData.put("serviceShutDownStartDt", commonConfig.getServiceShutDownStartDt());
+		mRtnData.put("serviceShutDownEndDt", commonConfig.getServiceShutDownEndDt());
 		
-		return rRtnData;
+		return mRtnData;
 	}
 	
 	/**
@@ -219,7 +218,7 @@ public class TestController {
 	@RequestMapping(value = "/test/saveCookieTest", method = RequestMethod.POST)
 	public @ResponseBody Map saveCookieTest(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
-		Map rRtnData = new HashMap<String, Object>();
+		Map mRtnData = new HashMap<String, Object>();
 		
 		// 쿠키생성
 		if ( !RequestUtil.setCookie(paramMap, request, response) ) {
@@ -227,9 +226,9 @@ public class TestController {
 		}
 		
 		// 쿠키읽기
-		rRtnData = RequestUtil.getCookie(paramMap, request, response);
+		mRtnData = RequestUtil.getCookie(paramMap, request, response);
 		
-		return rRtnData;
+		return mRtnData;
 	}
 	
 	/**
@@ -241,7 +240,7 @@ public class TestController {
 	@RequestMapping(value = "/test/findRuntimeExecTest", method = RequestMethod.POST)
 	public @ResponseBody Map findRuntimeExecTest(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
-		Map rRtnData = new HashMap<String, Object>();
+		Map mRtnData = new HashMap<String, Object>();
 		
 		// 런타임 커맨드 실행
 		String sCommand = ObjectUtils.toString(paramMap.get("command"));
@@ -264,6 +263,21 @@ public class TestController {
 			throw new BusinessException("커맨드 실행 중 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.", paramMap);
 		}
 		
-		return rRtnData;
+		return mRtnData;
+	}
+	
+	/**
+	 * @Desc	: 파일업로드 테스트
+	 * @Author	: 김성준
+	 * @Create	: 2015년 05월 30일 
+	 * @stereotype Action
+	 */
+	@RequestMapping(value = "/test/saveFileUpload", method = RequestMethod.POST)
+	public @ResponseBody Map saveFileUpload(@RequestParam Map<String, Object> paramMap, MultipartHttpServletRequest request, HttpServletResponse response) {
+		paramMap = RequestUtil.getParameter(paramMap, request, response);
+		
+		Map mRtnData = testSvc.saveFileUpload(paramMap);
+		
+		return mRtnData;
 	}
 }
