@@ -190,32 +190,31 @@ public class TestService extends CommonService {
 		String sFilePath = "/batch/data/MyApp/file/";
 		Iterator<String> itr =  request.getFileNames();
 		
-        if ( itr.hasNext() ) {
-            MultipartFile file = request.getFile(itr.next());
-            
-            String sOrgFileNm = file.getOriginalFilename();
-            String sOrgType = file.getContentType();
-            String sFileName = dateFormat.format(date) + sOrgFileNm.substring(sOrgFileNm.lastIndexOf(".")).toLowerCase();
-            long nFileSize = file.getSize();
-            
-        	if ( !file.isEmpty() ) {
-                try {
-                    byte[] bytes = file.getBytes();
-                    BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(sFilePath + sFileName)));
-                    stream.write(bytes);
-                    stream.close();
-                    
-                } catch (Exception e) {
-                	throw new BusinessException("파일업로드 중 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.", paramMap);
-                }
-            }
-        	
-        	mRtnData.put("fileType", sOrgType);
-        	mRtnData.put("fileName", sFileName);
-        	mRtnData.put("fileSize", nFileSize);
-        }
+		if ( itr.hasNext() ) {
+			MultipartFile file = request.getFile(itr.next());
+			
+			String sOrgFileNm = file.getOriginalFilename();
+			String sOrgType = file.getContentType();
+			String sFileName = dateFormat.format(date) + sOrgFileNm.substring(sOrgFileNm.lastIndexOf(".")).toLowerCase();
+			long nFileSize = file.getSize();
+			
+			if ( !file.isEmpty() ) {
+				try {
+					byte[] bytes = file.getBytes();
+					BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(sFilePath + sFileName)));
+					stream.write(bytes);
+					stream.close();
+					
+				} catch (Exception e) {
+					throw new BusinessException("파일업로드 중 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.", paramMap);
+				}
+			}
+			
+			mRtnData.put("fileType", sOrgType);
+			mRtnData.put("fileName", sFileName);
+			mRtnData.put("fileSize", nFileSize);
+		}
 		
-        return mRtnData;
+		return mRtnData;
 	}
-	
 }
