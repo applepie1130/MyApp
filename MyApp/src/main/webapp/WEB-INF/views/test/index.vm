@@ -1,0 +1,273 @@
+<!-- #* [S] Common Header, Snb *# -->
+#parse( "/common/header.vm" )
+#parse( "/common/snb.vm" )
+<!-- #* [E] Common Header, Snb *# -->
+
+<!-- #* Velocty 주석 in HTML *# -->
+<body>
+	<div class="container">
+	<div id="divPage">
+		<div class="page-header">
+		  <h1><a href="/">Welocome</a> <small>Velocity</small></h1>
+		</div>
+		
+		<div>
+			<br/>
+			<input type="button" id="btn_Save" value="저장" />
+			<input type="button" id="btn_Find" value="조회" />
+			<input type="button" id="btn_Page" value="페이지전환" />
+			<input type="button" id="btn_RestTmpToJson" value="JSON파싱" />
+			<input type="button" id="btn_RestTmpToXml" value="XML파싱" />
+			<input type="button" id="btn_NaverRank" value="네이버실검순위:크롤링" />
+			<input type="button" id="btn_SendMail" value="테스트메일발송" />
+			<input type="button" id="btn_FindConfig" value="설정파일가져오기" />
+			<input type="button" id="btn_FindException" value="예외처리테스트" />
+			<input type="button" id="btn_SaveCookie" value="쿠키생성/조회" />
+			<input type="button" id="btn_FindRuntimeExec" value="Runtime객체이용" />
+			
+		</div>
+		
+		<br/>
+		<div id="divValues">
+		</div>
+		<br/><br/>
+		
+		<div style="width:800px;">
+			<table id="tblUserList" class="display compact" cellspacing="0" width="100%">
+				<thead>
+					<tr>
+						<th></th>
+						<th>ID</th>
+						<th>NAME</th>
+						<th>ADDR</th>
+						<th>PHONE</th>
+					</tr>
+				</thead>
+				<tbody>
+				#foreach( $eachData in $!{rData} )
+					<tr>
+						<td></td>
+						<td>$!{eachData.user_id}</td>
+						<td>$!{eachData.user_nm}</td>
+						<td>$!{eachData.addr1} $!{eachData.addr2} $!{eachData.zipcode}</td>
+						<td>$!{eachData.phone}</td>
+					</tr>
+				#end
+				</tbody>
+				<tfoot>
+					<tr>
+						<th>SQ</th>
+						<th>ID</th>
+						<th>NAME</th>
+						<th>ADDR</th>
+						<th>PHONE</th>
+					</tr>
+				</tfoot>
+			</table>
+			
+			<br/><br/>
+			
+			<table id="tblUserInfo" class="display compact" cellspacing="0" width="100%">
+				<thead>
+					<tr>
+						<td>ID</td>
+						<th>NAME</th>
+						<th>ADDR1</th>
+						<th>ADDR2</th>
+						<th>ZIPCODE</th>
+						<th>PHONE</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="text" name="user_id" value=""/></td>
+						<td><input type="text" name="user_nm" value=""/></td>
+						<td><input type="text" name="addr1" value=""/></td>
+						<td><input type="text" name="addr2" value=""/></td>
+						<td><input type="text" name="zipcode" value=""/></td>
+						<td><input type="text" name="phone" value=""/></td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td>ID</td>
+						<th>NAME</th>
+						<th>ADDR1</th>
+						<th>ADDR2</th>
+						<th>ZIPCODE</th>
+						<th>PHONE</th>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+		
+		<div id="divRestTmp">
+		</div>
+	</div>
+	</div>
+	<script type="text/javascript">
+		/* #* Velocity 주석 in Javascript *# */
+		(function($) {
+			/* #* [S] Document Ready *# */
+			$(function() {
+				/* #* [S] DataTables 그리드선언 *# */
+				var t = $("table#tblUserList").DataTable({
+			        "columnDefs": [{
+			            "searchable"	: false,
+			            "orderable"		: false,
+			            "targets"		: 0
+			        }],
+			        //"order": [[ 1, 'asc' ]],
+			        "language": {
+						"decimal"	: ",",
+						"thousands"	: "."
+			        },
+					"pagingType": "full_numbers"
+			    });
+			    t.on("order.dt search.dt", function () {
+			        t.column(0, {search:"applied", order:"applied"}).nodes().each( function (cell, i) {
+			            cell.innerHTML = i+1;
+			        } );
+			    }).draw();
+			    
+			    $("table#tblUserInfo").DataTable();
+			    /* #* [E] DataTables 그리드선언 *# */
+			    
+				$("#btn_Find").bind("click", function() {
+					Controller.setAction("/test/findUserList");
+					Controller.setParams({
+						"user_nm"	: "김성",
+						"user_id"	: "applepie1130"
+					});
+					Controller.submit(function(data){
+						console.log(data);
+						$("#divValues").text(JSON.stringify(data));
+					});
+				});
+				
+				$("#btn_Save").bind("click", function(){
+					var objUserInfo	= {"status":"insert"};
+					var tblUserInfo	= $("#tblUserInfo input");
+					var nTblLenght	= tblUserInfo.length;
+					for(i=0; i<nTblLenght; i++){
+						objUserInfo[tblUserInfo.eq(i).attr("name")] = tblUserInfo.eq(i).val(); 
+					}
+					Controller.setAction("/test/saveUserInfo");
+					Controller.setParams({
+						"rUserInfo"	: [objUserInfo]
+					}, "JSON");
+					Controller.submit(function(data){
+						if ( data.status < 0) {
+							alert(data.message);
+						} else {
+							$("#btn_Page").trigger("click");
+						}
+					});
+				});
+				
+				$("#btn_Page").bind("click", function(){
+					PageReplaceForm.setAction("/");
+					PageReplaceForm.setParams({
+						"id":"apple"
+					});
+					PageReplaceForm.submit(function(data){
+						$("#divPage").empty();
+						$("#divPage").append(data);
+					});
+				});
+				
+				$("#btn_RestTmpToJson").bind("click", function(){
+					Controller.setAction("/test/findRestTmpList");
+					Controller.setParams({
+						url			: "http://www.followkr.com/rank/realtime.php",
+						//url			: "http://ip.jsontest.com/",
+						restType	: "json"
+					});
+					Controller.submit(function(data){
+						console.log(data);
+						$("#divValues").text(JSON.stringify(data.key));
+					});
+				});
+				
+				$("#btn_RestTmpToXml").bind("click", function(){
+					Controller.setAction("/test/findRestTmpList");
+					Controller.setParams({
+						url			: "http://stock.nate.com/data/StockInfoToXml.do",
+						restType	: "xml"
+					});
+					Controller.submit(function(data){
+						console.log(data);
+						$("#divValues").text(JSON.stringify(data.key));
+					});
+				});
+				
+				$("#btn_NaverRank").bind("click", function(){
+					Controller.setAction("/test/findNaverRealRankList");
+					Controller.setParams({});
+					Controller.submit(function(data){
+						console.log(data);
+						$("#divValues").text(JSON.stringify(data));
+					});
+				});
+				
+				$("#btn_SendMail").bind("click", function(){
+					Controller.setAction("/test/saveSendMail");
+					Controller.setParams({
+						"from"		: "dbdbrhrvlfl@naver.com",
+						"fromNm"	: "김성준",
+						"to"		: "applepie1130@nate.com",
+						"title"		: "[공지] 메일발송 테스트 입니다.",
+						"contents"	: "메일이 잘 가지요? ㅎㅎ",
+					});
+					Controller.submit(function(data){
+						console.log(data);
+						if ( data.status > 0 ) {
+							alert("메일발송처리가 완료되었습니다.\n감사합니다.");
+						}
+					});
+				});
+				
+				$("#btn_FindConfig").bind("click", function(){
+					Controller.setAction("/test/findBeanConfigure");
+					Controller.setParams({});
+					Controller.submit(function(data){
+						console.log(data);
+						$("#divValues").text(JSON.stringify(data));
+					});
+				});
+				
+				$("#btn_FindException").bind("click", function(){
+					Controller.setAction("/test/findExceptionTest");
+					Controller.setParams({});
+					Controller.submit(function(data){
+						console.log(data);
+					});
+				});
+				
+				$("#btn_SaveCookie").bind("click", function(){
+					Controller.setAction("/test/saveCookieTest");
+					Controller.setParams({
+						"cookieName"	: "TEST",
+						"cookieValue"	: "123",
+						"cookieExpire"	: "100",
+						"cookiePath"	: "/"
+					});
+					Controller.submit(function(data){
+						$("#divValues").text(JSON.stringify(data));
+					});
+				});
+				
+				$("#btn_FindRuntimeExec").bind("click", function(){
+					Controller.setAction("/test/findRuntimeExecTest");
+					Controller.setParams({
+						"command" : "pwd"
+					});
+					Controller.submit(function(data){
+						$("#divValues").text(JSON.stringify(data));
+					});
+				});
+			});
+			/* #* [E] Document Ready *# */
+		}(jQuery));
+	</script>
+</body>
