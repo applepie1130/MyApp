@@ -8,7 +8,7 @@
 	<div class="container">
 	<div id="divPage">
 		<div class="page-header">
-		  <h1><a href="/">Welocome</a> <small>Velocity</small></h1>
+		  <h1><a href="/test">Welocome</a> <small>Velocity</small></h1>
 		</div>
 		
 		<div>
@@ -164,7 +164,7 @@
 				});
 				
 				$("#btn_Page").bind("click", function(){
-					PageReplaceForm.setAction("/");
+					PageReplaceForm.setAction("/test");
 					PageReplaceForm.setParams({
 						"id":"apple"
 					});

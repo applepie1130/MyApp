@@ -12,13 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.myapp.comm.BusinessException;
 import com.myapp.comm.CommonConfig;
@@ -50,8 +50,8 @@ public class TestController {
 	 * @Create	: 2015년 05월 16일 
 	 * @stereotype Action
 	 */
-	@RequestMapping(value = "/")
-	public ModelAndView userView(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/test")
+	public String userView(@RequestParam Map<String, Object> paramMap, Model model, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		
 		List findUserList = testSvc.findUserList(paramMap);
@@ -61,7 +61,7 @@ public class TestController {
 		fileSvc.writeFileToJSONList(sFile, findUserList);
 		
 		// redirect
-		return new ModelAndView("redirect:/test");
+		return "redirect:/test/index";
 	}
 	
 	/**
@@ -70,18 +70,17 @@ public class TestController {
 	 * @Create	: 2015년 05월 16일 
 	 * @stereotype Action
 	 */
-	@RequestMapping(value = "/test")
-	public ModelAndView userView2(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/test/index")
+	public String userView2(@RequestParam Map<String, Object> paramMap, Model model, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		
 		// readFile
 		String sFile = "/batch/data/MyApp/test/rUserList.json";
 		List findUserList = fileSvc.readFileFromJSONList(sFile);
 		
-		ModelAndView mv = new ModelAndView("test/index");
-		mv.addObject("rData", findUserList);
+		model.addAttribute("rData", findUserList);
 		
-		return mv;
+		return "test/index";
 	}
 	
 	/**
@@ -90,8 +89,9 @@ public class TestController {
 	 * @Create	: 2015년 05월 16일 
 	 * @stereotype Action
 	 */
+	@ResponseBody
 	@RequestMapping(value = "/test/findUserList", method = RequestMethod.POST)
-	public @ResponseBody List findUserList(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
+	public List findUserList(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		
 		List rUserList = testSvc.findUserList(paramMap);
@@ -105,8 +105,9 @@ public class TestController {
 	 * @Create	: 2015년 05월 16일 
 	 * @stereotype Action
 	 */
+	@ResponseBody
 	@RequestMapping(value = "/test/saveUserInfo", method = RequestMethod.POST)
-	public @ResponseBody Map saveUserInfo(@RequestBody Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
+	public Map saveUserInfo(@RequestBody Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		
 		List rParamData = (List) paramMap.get("rUserInfo");
@@ -121,8 +122,9 @@ public class TestController {
 	 * @Create	: 2015년 05월 16일 
 	 * @stereotype Action
 	 */
+	@ResponseBody
 	@RequestMapping(value = "/test/findRestTmpList", method = RequestMethod.POST)
-	public @ResponseBody Map findRestTmpList(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
+	public  Map findRestTmpList(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		
 		Map mTmpData = new HashMap();
@@ -152,8 +154,9 @@ public class TestController {
 	 * @Create	: 2015년 05월 16일 
 	 * @stereotype Action
 	 */
+	@ResponseBody
 	@RequestMapping(value = "/test/findNaverRealRankList", method = RequestMethod.POST)
-	public @ResponseBody List findNaverRealRankList(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
+	public  List findNaverRealRankList(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		
 		String sUrl = "http://www.naver.com";
@@ -170,8 +173,9 @@ public class TestController {
 	 * @Create	: 2015년 05월 16일 
 	 * @stereotype Action
 	 */
+	@ResponseBody
 	@RequestMapping(value = "/test/saveSendMail", method = RequestMethod.POST)
-	public @ResponseBody Map saveSendMail(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
+	public Map saveSendMail(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		
 		Map mRtnData  = mailSvc.sendMail(paramMap);
@@ -185,8 +189,9 @@ public class TestController {
 	 * @Create	: 2015년 05월 16일 
 	 * @stereotype Action
 	 */
+	@ResponseBody
 	@RequestMapping(value = "/test/findBeanConfigure", method = RequestMethod.POST)
-	public @ResponseBody Map findBeanConfigure(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
+	public Map findBeanConfigure(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		
 		Map mRtnData = new HashMap<String, Object>();
@@ -215,8 +220,9 @@ public class TestController {
 	 * @Create	: 2015년 05월 23일 
 	 * @stereotype Action
 	 */
+	@ResponseBody
 	@RequestMapping(value = "/test/saveCookieTest", method = RequestMethod.POST)
-	public @ResponseBody Map saveCookieTest(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
+	public Map saveCookieTest(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		Map mRtnData = new HashMap<String, Object>();
 		
@@ -237,8 +243,9 @@ public class TestController {
 	 * @Create	: 2015년 05월 23일 
 	 * @stereotype Action
 	 */
+	@ResponseBody
 	@RequestMapping(value = "/test/findRuntimeExecTest", method = RequestMethod.POST)
-	public @ResponseBody Map findRuntimeExecTest(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
+	public Map findRuntimeExecTest(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		Map mRtnData = new HashMap<String, Object>();
 		
@@ -272,8 +279,9 @@ public class TestController {
 	 * @Create	: 2015년 05월 30일 
 	 * @stereotype Action
 	 */
+	@ResponseBody
 	@RequestMapping(value = "/test/saveFileUpload", method = RequestMethod.POST)
-	public @ResponseBody Map saveFileUpload(@RequestParam Map<String, Object> paramMap, MultipartHttpServletRequest request, HttpServletResponse response) {
+	public Map saveFileUpload(@RequestParam Map<String, Object> paramMap, MultipartHttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		
 		Map mRtnData = testSvc.saveFileUpload(paramMap);

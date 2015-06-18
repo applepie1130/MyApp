@@ -18,11 +18,16 @@
 						http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
+	<!-- [S] 정적자원관리 -->
+	<mvc:resources mapping="/resources/**" location="/resources/" cache-period="60" />
+	<!-- [E] 정적자원관리 -->
+	
 	<!-- [S] Configurer config -->
 	<bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
         	<list>
-        		<value>/WEB-INF/spring/common.properties</value>
+        		<!-- <value>/WEB-INF/spring/common.properties</value>  -->
+        		<value>classpath:/com/myapp/comm/common.properties</value>
 	        </list>
         </property>
     </bean>
@@ -93,11 +98,4 @@
 		</property>
 	</bean>
 	<!-- [E] File Upload Conf -->
-	
-	<!-- [S] Common.cfg Bean -->
-	<bean id="commonConfig" class="com.myapp.comm.CommonConfig">
-		<property name="serviceShutDownStartDt" value="${service.shutDownStartDt}" />
-		<property name="serviceShutDownEndDt" value="${service.shutDownEndDt}"/>
-	</bean>
-	<!-- [S] Common.cfg Bean -->
 </beans>
