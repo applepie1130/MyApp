@@ -91,6 +91,7 @@ var Controller = (function() {
 		this.url			= "";
 		this.data			= "";
 		this.processData	= true;
+		this.mimeType		= "";
 	};
 	
 	function setAction( prmUrl ) {
@@ -98,26 +99,30 @@ var Controller = (function() {
 	};
 	
 	function setParams( prm, type ) {
-		if ( typeof type !== "undefined" && type.toUpperCase() === "JSON" ) {
+		if ( typeof type !== "undefined" && type.toUpperCase() === "JSON" ) { // 리스트로 전송시, 서버에서는 @RequestBody 처리
 			this.contentType	= "application/json; charset=UTF-8";
 			this.data			= JSON.stringify(prm);
 			this.dataType		= "JSON";
 			this.processData	= true;
-		} else if ( typeof type !== "undefined" && type.toUpperCase() === "HTML" ) {
+			this.mimeType		= "";
+		} else if ( typeof type !== "undefined" && type.toUpperCase() === "HTML" ) {	// 페이지이동 처리시
 			this.contentType	= "application/x-www-form-urlencoded; charset=UTF-8";
 			this.data			= prm;
 			this.dataType		= type.toUpperCase();
 			this.processData	= true;
-		} else if ( typeof type !== "undefined" && type.toUpperCase() === "FILE" ) {
-			this.contentType	= "application/x-www-form-urlencoded; charset=UTF-8";
+			this.mimeType		= "";
+		} else if ( typeof type !== "undefined" && type.toUpperCase() === "FILE" ) {	// 파일첨부가 포함된 경우
+			this.contentType	= false;
 			this.data			= prm;
 			this.dataType		= "JSON";
 			this.processData	= false;
+			this.mimeType		= "multipart/form-data";
 		} else {
 			this.contentType	= "application/x-www-form-urlencoded; charset=UTF-8";
 			this.data			= prm;
 			this.dataType		= "JSON";
 			this.processData	= true;
+			this.mimeType		= "";
 		}
 	};
 	

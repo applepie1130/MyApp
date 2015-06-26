@@ -6,110 +6,143 @@
 <!-- #* Velocty 주석 in HTML *# -->
 <body>
 	<div class="container">
-	<div id="divPage">
-		<div class="page-header">
-		  <h1><a href="/test">Welocome</a> <small>Velocity</small></h1>
-		</div>
-		
-		<div>
-			<br/>
-			<input type="button" id="btn_Save" value="저장" />
-			<input type="button" id="btn_Find" value="조회" />
-			<input type="button" id="btn_Page" value="페이지전환" />
-			<input type="button" id="btn_RestTmpToJson" value="JSON파싱" />
-			<input type="button" id="btn_RestTmpToXml" value="XML파싱" />
-			<input type="button" id="btn_NaverRank" value="네이버실검순위:크롤링" />
-			<input type="button" id="btn_SendMail" value="테스트메일발송" />
-			<input type="button" id="btn_FindConfig" value="설정파일가져오기" />
-			<input type="button" id="btn_FindException" value="예외처리테스트" />
-			<input type="file" id="file-data" />
-		</div>
-		
-		<br/>
-		<div id="divValues">
-		</div>
-		<br/><br/>
-		
-		<div style="width:800px;">
-			<table id="tblUserList" class="display compact" cellspacing="0" width="100%">
-				<thead>
-					<tr>
-						<th></th>
-						<th>ID</th>
-						<th>NAME</th>
-						<th>ADDR</th>
-						<th>PHONE</th>
-					</tr>
-				</thead>
-				<tbody>
-				#foreach( $eachData in $!{rData} )
-					<tr>
-						<td></td>
-						<td>$!{eachData.user_id}</td>
-						<td>$!{eachData.user_nm}</td>
-						<td>$!{eachData.addr1} $!{eachData.addr2} $!{eachData.zipcode}</td>
-						<td>$!{eachData.phone}</td>
-					</tr>
-				#end
-				</tbody>
-				<tfoot>
-					<tr>
-						<th>SQ</th>
-						<th>ID</th>
-						<th>NAME</th>
-						<th>ADDR</th>
-						<th>PHONE</th>
-					</tr>
-				</tfoot>
-			</table>
+		<div id="divPage">
+			<div class="page-header">
+			  <h1><a href="/test">Welocome</a> <small>Velocity</small></h1>
+			</div>
 			
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">기능 테스트</h3>
+				</div>
+			
+				<div class="panel-body">
+					<div class="btn-group" role="group" aria-label="...">
+						<button type="button" class="btn btn-default" id="btn_Save">저장</button>
+						<button type="button" class="btn btn-default" id="btn_Find">조회</button>
+						<button type="button" class="btn btn-default" id="btn_Page">페이지전환</button>
+					</div>
+					<br/>
+					<div class="btn-group" role="group" aria-label="...">
+						<button type="button" class="btn btn-default" id="btn_RestTmpToJson">JSON파싱</button>
+						<button type="button" class="btn btn-default" id="btn_RestTmpToXml">XML파싱</button>
+						<button type="button" class="btn btn-default" id="btn_NaverRank">네이버실검순위:크롤링</button>
+					</div>
+					<br/>
+					<div class="btn-group" role="group" aria-label="...">
+						<button type="button" class="btn btn-default" id="btn_SendMail">테스트메일발송</button>
+						<button type="button" class="btn btn-default" id="btn_FindConfig">설정파일가져오기</button>
+						<button type="button" class="btn btn-default" id="btn_FindException">예외처리테스트</button>
+						<button type="button" class="btn btn-default" id="btn_SaveCookie">쿠키생성</button>
+					</div>
+				</div>
+			</div>
+			
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title">파일 업로드 테스트</h3>
+				</div>
+				<div class="panel-body">
+					<form id="frm_file" enctype="multipart/form-data" method="POST">
+						<input type="text" name="inp_name" value=""/>
+						<input type="file" name="inp_file1" id="inp_file1" />
+						<input type="file" name="inp_file2" id="inp_file2" />
+					</form>
+					<input type="button" id="btn_SaveFileUpload" value="업로드" />
+				</div>
+			</div>
+			
+			<div id="divValues" class="">
+			</div>
 			<br/><br/>
 			
-			<table id="tblUserInfo" class="display compact" cellspacing="0" width="100%">
-				<thead>
-					<tr>
-						<td>ID</td>
-						<th>NAME</th>
-						<th>ADDR1</th>
-						<th>ADDR2</th>
-						<th>ZIPCODE</th>
-						<th>PHONE</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td><input type="text" name="user_id" value=""/></td>
-						<td><input type="text" name="user_nm" value=""/></td>
-						<td><input type="text" name="addr1" value=""/></td>
-						<td><input type="text" name="addr2" value=""/></td>
-						<td><input type="text" name="zipcode" value=""/></td>
-						<td><input type="text" name="phone" value=""/></td>
-					</tr>
-				</tbody>
-				<tfoot>
-					<tr>
-						<td>ID</td>
-						<th>NAME</th>
-						<th>ADDR1</th>
-						<th>ADDR2</th>
-						<th>ZIPCODE</th>
-						<th>PHONE</th>
-					</tr>
-				</tfoot>
-			</table>
+			<div class="panel panel-success">
+	  			<div class="panel-heading">
+					<h3 class="panel-title">테이블 리스트</h3>
+				</div>
+	 			<div class="panel-body">
+	 				<table id="tblUserList" class="display compact" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th></th>
+							<th>ID</th>
+							<th>NAME</th>
+							<th>ADDR</th>
+							<th>PHONE</th>
+						</tr>
+					</thead>
+					<tbody>
+					#foreach( $eachData in $!{rData} )
+						<tr>
+							<td></td>
+							<td>$!{eachData.user_id}</td>
+							<td>$!{eachData.user_nm}</td>
+							<td>$!{eachData.addr1} $!{eachData.addr2} $!{eachData.zipcode}</td>
+							<td>$!{eachData.phone}</td>
+						</tr>
+					#end
+					</tbody>
+					<tfoot>
+						<tr>
+							<th>SQ</th>
+							<th>ID</th>
+							<th>NAME</th>
+							<th>ADDR</th>
+							<th>PHONE</th>
+						</tr>
+					</tfoot>
+				</table>
+	 			</div>
+	 		</div>
+	 		
+	 		<div class="panel panel-danger">
+	  			<div class="panel-heading">
+					<h3 class="panel-title">입력테이블</h3>
+				</div>
+	 			<div class="panel-body">
+					<table id="tblUserInfo" class="display compact" cellspacing="0" width="100%">
+						<thead>
+							<tr>
+								<td>ID</td>
+								<th>NAME</th>
+								<th>ADDR1</th>
+								<th>ADDR2</th>
+								<th>ZIPCODE</th>
+								<th>PHONE</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="text" name="user_id" value=""/></td>
+								<td><input type="text" name="user_nm" value=""/></td>
+								<td><input type="text" name="addr1" value=""/></td>
+								<td><input type="text" name="addr2" value=""/></td>
+								<td><input type="text" name="zipcode" value=""/></td>
+								<td><input type="text" name="phone" value=""/></td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td>ID</td>
+								<th>NAME</th>
+								<th>ADDR1</th>
+								<th>ADDR2</th>
+								<th>ZIPCODE</th>
+								<th>PHONE</th>
+							</tr>
+						</tfoot>
+					</table>
+	 			</div>
+	 		</div>
 		</div>
-		
-		<div id="divRestTmp">
-		</div>
-	</div>
 	</div>
 	<script type="text/javascript">
 		/* #* Velocity 주석 in Javascript *# */
-		(function($) {
+		(function($J) {
 			/* #* [S] Document Ready *# */
-			$(function() {
+			$J(function() {
 				/* #* [S] DataTables 그리드선언 *# */
-				var t = $("table#tblUserList").DataTable({
+				var t = $J("table#tblUserList").DataTable({
 			        "columnDefs": [{
 			            "searchable"	: false,
 			            "orderable"		: false,
@@ -128,10 +161,12 @@
 			        } );
 			    }).draw();
 			    
-			    $("table#tblUserInfo").DataTable();
+			    $J("table#tblUserInfo").DataTable();
 			    /* #* [E] DataTables 그리드선언 *# */
 			    
-				$("#btn_Find").bind("click", function() {
+				$J("#btn_Find").bind("click", function(e) {
+					e.preventDefault();
+					
 					Controller.setAction("/test/findUserList");
 					Controller.setParams({
 						"user_nm"	: "김성",
@@ -139,13 +174,15 @@
 					});
 					Controller.submit(function(data){
 						console.log(data);
-						$("#divValues").text(JSON.stringify(data));
+						$J("#divValues").text(JSON.stringify(data));
 					});
 				});
 				
-				$("#btn_Save").bind("click", function(){
+				$J("#btn_Save").bind("click", function(e) {
+					e.preventDefault();
+					
 					var objUserInfo	= {"status":"insert"};
-					var tblUserInfo	= $("#tblUserInfo input");
+					var tblUserInfo	= $J("#tblUserInfo input");
 					var nTblLenght	= tblUserInfo.length;
 					for(i=0; i<nTblLenght; i++){
 						objUserInfo[tblUserInfo.eq(i).attr("name")] = tblUserInfo.eq(i).val(); 
@@ -158,23 +195,27 @@
 						if ( data.status < 0) {
 							alert(data.message);
 						} else {
-							$("#btn_Page").trigger("click");
+							location.reload();
 						}
 					});
 				});
 				
-				$("#btn_Page").bind("click", function(){
+				$J("#btn_Page").bind("click", function(e) {
+					e.preventDefault();
+					
 					PageReplaceForm.setAction("/test");
 					PageReplaceForm.setParams({
 						"id":"apple"
 					});
 					PageReplaceForm.submit(function(data){
-						$("#divPage").empty();
-						$("#divPage").append(data);
+						$J("#divPage").empty();
+						$J("#divPage").append(data);
 					});
 				});
 				
-				$("#btn_RestTmpToJson").bind("click", function(){
+				$J("#btn_RestTmpToJson").bind("click", function(e) {
+					e.preventDefault();
+					
 					Controller.setAction("/test/findRestTmpList");
 					Controller.setParams({
 						url			: "http://www.followkr.com/rank/realtime.php",
@@ -183,37 +224,44 @@
 					});
 					Controller.submit(function(data){
 						console.log(data);
-						$("#divValues").text(JSON.stringify(data.key));
+						$J("#divValues").text(JSON.stringify(data.key));
 					});
 				});
 				
-				$("#btn_RestTmpToXml").bind("click", function(){
+				$J("#btn_RestTmpToXml").bind("click", function(e) {
+					e.preventDefault();
+					
 					Controller.setAction("/test/findRestTmpList");
 					Controller.setParams({
-						url			: "http://stock.nate.com/data/StockInfoToXml.do",
+						//url			: "http://stock.nate.com/data/StockInfoToXml.do",
+						url			: "http://cafe.rss.naver.com/inmacbook",
 						restType	: "xml"
 					});
 					Controller.submit(function(data){
 						console.log(data);
-						$("#divValues").text(JSON.stringify(data.key));
+						$J("#divValues").text(JSON.stringify(data.key));
 					});
 				});
 				
-				$("#btn_NaverRank").bind("click", function(){
+				$J("#btn_NaverRank").bind("click", function(e) {
+					e.preventDefault();
+					
 					Controller.setAction("/test/findNaverRealRankList");
 					Controller.setParams({});
 					Controller.submit(function(data){
 						console.log(data);
-						$("#divValues").text(JSON.stringify(data));
+						$J("#divValues").text(JSON.stringify(data));
 					});
 				});
 				
-				$("#btn_SendMail").bind("click", function(){
+				$J("#btn_SendMail").bind("click", function(e) {
+					e.preventDefault();
+					
 					Controller.setAction("/test/saveSendMail");
 					Controller.setParams({
 						"from"		: "dbdbrhrvlfl@naver.com",
 						"fromNm"	: "김성준",
-						"to"		: "applepie1130@nate.com",
+						"to"		: "gptmd3@hanmail.net",
 						"title"		: "[공지] 메일발송 테스트 입니다.",
 						"contents"	: "메일이 잘 가지요? ㅎㅎ",
 					});
@@ -225,16 +273,20 @@
 					});
 				});
 				
-				$("#btn_FindConfig").bind("click", function(){
+				$J("#btn_FindConfig").bind("click", function(e) {
+					e.preventDefault();
+					
 					Controller.setAction("/test/findBeanConfigure");
 					Controller.setParams({});
 					Controller.submit(function(data){
 						console.log(data);
-						$("#divValues").text(JSON.stringify(data));
+						$J("#divValues").text(JSON.stringify(data));
 					});
 				});
 				
-				$("#btn_FindException").bind("click", function(){
+				$J("#btn_FindException").bind("click", function(e) {
+					e.preventDefault();
+					
 					Controller.setAction("/test/findExceptionTest");
 					Controller.setParams({});
 					Controller.submit(function(data){
@@ -242,34 +294,41 @@
 					});
 				});
 				
-				$("#file-data").fileupload(FileUploader.submit("/test/saveFileUpload"));
+				$J("#btn_SaveCookie").bind("click", function(e) {
+					e.preventDefault();
+					
+					var nCurrTime = new Date(), nStandTime = new Date();
+					nStandTime.setHours(23, 59, 59);
+					
+					Controller.setAction("/test/saveCookieTest");
+					Controller.setParams({
+						"cookieName"	: "TEST_COOKIE",
+						"cookieValue"	: "1",
+						"cookieExpire"	: nStandTime.getHours() * nStandTime.getMinutes() * nStandTime.getMilliseconds(),
+						"cookiePath"	: "/"
+					});
+					Controller.submit(function(data){
+						console.log(data);
+					});
+				});
 				
-				/* $("#file-data").fileupload({
-			        url			: "/test/saveFileUpload", 
-			        dataType	: 'json',
-			        add: function(e, data){
-						var uploadFile = data.files[0];
-			            var isValid = true;
-			            if (!(/png|jpe?g|gif/i).test(uploadFile.name)) {
-			                alert('png, jpg, gif 만 가능합니다');
-			                isValid = false;
-			            } else if (uploadFile.size > 5000000) {
-			                alert('파일 용량은 5MB를 초과할 수 없습니다.');
-			                isValid = false;
-			            }
-			            if (isValid) {
-			                data.submit();
-			            }
-			        },
-			        done: function (e, data) {
-			        	console.log(data.result.fileName);
-			        	console.log(data.result.fileSize);
-			        	console.log(data.result.fileType);
-			        },
-			        fail: function(e, data){
-			        	sCallbackMsgs = "오류가 발생했습니다.\n잠시 후 다시 시도해주세요.";			        	
-			        }
-			    }); */
+				$J("#btn_SaveFileUpload").bind("click", function(e) {
+					e.preventDefault();
+					
+					var formData = new FormData($J("form#frm_file")[0]);
+					
+					Controller.setAction("/test/saveFileUpload");
+					Controller.setParams( formData , "FILE" );
+					Controller.submit(function(data){
+						console.log(data);
+						alert("이미지 업로드가 완료되었습니다.");
+						location.reload();
+					});
+				});
+				
+				// Hidden Function
+				// $J("#inp_file1").fileupload(FileUploader.submit("/test/saveFileUpload"));
+			    
 			});
 			/* #* [E] Document Ready *# */
 		}(jQuery));

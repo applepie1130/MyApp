@@ -55,6 +55,7 @@ public class RequestUtil {
 			if ( !StringUtil.isEmpty(sPath) ) {
 				cookie.setPath(sPath);
 			}
+			
 			response.addCookie(cookie);
 			return true;
 		}
@@ -71,7 +72,6 @@ public class RequestUtil {
 	public static Map getCookie(Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		String sName	= ObjectUtils.toString(paramMap.get("cookieName"));
 		Map rRtnData	= new HashMap<String, Object>();
-		System.out.println("오니?" + StringUtil.isEmpty(sName));
 		
 		if ( !StringUtil.isEmpty(sName) ) {
 			Cookie cookies[] = request.getCookies();

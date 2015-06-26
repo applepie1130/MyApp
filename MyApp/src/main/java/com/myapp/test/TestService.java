@@ -1,8 +1,6 @@
 package com.myapp.test;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,6 +9,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -31,6 +31,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.myapp.comm.BusinessException;
 import com.myapp.comm.CommonService;
+import com.myapp.comm.StringUtil;
 
 @Service
 @Transactional
@@ -182,37 +183,70 @@ public class TestService extends CommonService {
 	 * @stereotype ServiceMethod
 	 */
 	public Map saveFileUpload(Map paramMap) {
-		MultipartHttpServletRequest request = (MultipartHttpServletRequest) paramMap.get("request");
 		Map mRtnData = new HashMap<String, Object>();
-		
-		Date date = new Date();
-		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyyMMddHHmmss");
-		String sFilePath = "/batch/data/MyApp/file/";
+		MultipartHttpServletRequest request = (MultipartHttpServletRequest) paramMap.get("request");
+		MultipartFile file = null;
 		Iterator<String> itr =  request.getFileNames();
+		String sFilePath = "/batch/data/MyApp/file/";
 		
-		if ( itr.hasNext() ) {
-			MultipartFile file = request.getFile(itr.next());
-			
-			String sOrgFileNm = file.getOriginalFilename();
-			String sOrgType = file.getContentType();
-			String sFileName = dateFormat.format(date) + sOrgFileNm.substring(sOrgFileNm.lastIndexOf(".")).toLowerCase();
-			long nFileSize = file.getSize();
+		// 파일검증
+		while ( itr.hasNext() ) {
+			file = request.getFile(itr.next());
 			
 			if ( !file.isEmpty() ) {
+				// 파일타입 체크 (이미지 파일 제한)
+				String sOrgType = file.getContentType();
+				Pattern pattern = Pattern.compile("image");
+				Matcher matcher = pattern.matcher(sOrgType);
+				
+				if ( !matcher.find() ) {
+					throw new BusinessException("이미지파일만 업로드 가능합니다.\n다시 시도해주세요.", paramMap);
+				}
+				
+				
+				// 파일사이즈 체크 (5MB이 제한)
+				long nFileSize = file.getSize();
+				
+				if ( nFileSize > 5000000 ) {
+					throw new BusinessException("파일 용량은 5MB를 초과할 수 없습니다.\n다시 시도해주세요.", paramMap);
+				}
+			}
+		}
+		
+		
+		// 파일전송
+		itr =  request.getFileNames();
+		while ( itr.hasNext() ) {
+			file = request.getFile(itr.next());
+			
+			if ( !file.isEmpty() ) {
+//				Date date = new Date();
+//				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+//				dateFormat.format(date);
+				
+				String sOrgFileNm = file.getOriginalFilename();
+				String sOrgType = file.getContentType();
+				String sFileName = StringUtil.getUniqueString() + sOrgFileNm.substring(sOrgFileNm.lastIndexOf(".")).toLowerCase();
+				long nFileSize = file.getSize();
+				
 				try {
-					byte[] bytes = file.getBytes();
-					BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(sFilePath + sFileName)));
-					stream.write(bytes);
-					stream.close();
+					// old (Using BufferOutputStream)
+//					byte[] bytes = file.getBytes();
+//					BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(sFilePath + sFileName)));
+//					stream.write(bytes);
+//					stream.close();
+					
+					// new (Using MultipartFile transfer)
+					file.transferTo(new File(sFilePath + sFileName));
 					
 				} catch (Exception e) {
 					throw new BusinessException("파일업로드 중 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.", paramMap);
 				}
+				
+				mRtnData.put("fileType", sOrgType);
+				mRtnData.put("fileName", sFileName);
+				mRtnData.put("fileSize", nFileSize);
 			}
-			
-			mRtnData.put("fileType", sOrgType);
-			mRtnData.put("fileName", sFileName);
-			mRtnData.put("fileSize", nFileSize);
 		}
 		
 		return mRtnData;
