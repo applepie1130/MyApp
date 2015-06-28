@@ -149,12 +149,16 @@ var Controller = (function() {
     				var sCallbackMsgs;
     				
     				if ( jqXHR.responseText.indexOf("<html>") < 0 ) {
-    					sCallbackMsgs = decodeURIComponent(jqXHR.responseText) + "\n" + "(" + decodeURIComponent(jqXHR.statusText) + ", " + jqXHR.status + ")";
+    					//sCallbackMsgs = decodeURIComponent(jqXHR.responseText) + "<br/>" + "(" + decodeURIComponent(jqXHR.statusText) + ", " + jqXHR.status + ")";
+    					sCallbackMsgs = decodeURIComponent(jqXHR.responseText);
     				} else {
-    					sCallbackMsgs = "오류가 발생했습니다.\n잠시 후 다시 시도해주세요." + "\n" + "(" + decodeURIComponent(jqXHR.statusText) + ", " + jqXHR.status + ")";
+    					//sCallbackMsgs = "오류가 발생했습니다.<br/>잠시 후 다시 시도해주세요." + "<br/>" + "(" + decodeURIComponent(jqXHR.statusText) + ", " + jqXHR.status + ")";
+    					sCallbackMsgs = "오류가 발생했습니다.<br/>잠시 후 다시 시도해주세요.";
     				}
     				
-    				alert(sCallbackMsgs);
+    				jQuery("#alertModalLabel").text("ERROR");
+					jQuery("#alertModalBody").html(sCallbackMsgs);
+					jQuery("#alertModal").modal();
     				
     			} catch(e) {
     				console.log("e:", e);
@@ -209,13 +213,18 @@ var FileUploader = (function() {
 		        var isValid		= true;
 		        
 		        if (!(/png|jpe?g|gif/i).test(uploadFile.name)) {
-		            alert('png, jpg, gif 만 가능합니다');
+		            jQuery("#alertModalLabel").text("WARNNING");
+					jQuery("#alertModalBody").text("png, jpg, gif 만 가능합니다.");
+					jQuery("#alertModal").modal();
+		            
 		            isValid		= false;
 		            
 		        } else if (uploadFile.size > 5000000) {
-		            alert('파일 용량은 5MB를 초과할 수 없습니다.');
-		            isValid		= false;
+		            jQuery("#alertModalLabel").text("WARNNING");
+					jQuery("#alertModalBody").text("파일 용량은 5MB를 초과할 수 없습니다.");
+					jQuery("#alertModal").modal();
 		            
+		            isValid		= false;
 		        }
 		        
 		        if (isValid) {
@@ -228,7 +237,11 @@ var FileUploader = (function() {
 		    	console.log(data.result.fileType);
 		    },
 		    fail: function(e, data){
-		    	sCallbackMsgs = "오류가 발생했습니다.\n잠시 후 다시 시도해주세요.";			        	
+		    	sCallbackMsgs = "오류가 발생했습니다.<br/>잠시 후 다시 시도해주세요.";
+		    	
+		    	jQuery("#alertModalLabel").text("ERROR");
+				jQuery("#alertModalBody").html(sCallbackMsgs);
+				jQuery("#alertModal").modal();
 		    }
 		}
 	}

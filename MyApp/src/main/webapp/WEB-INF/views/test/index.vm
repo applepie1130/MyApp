@@ -1,60 +1,60 @@
-<!-- #* [S] Common Header, Snb *# -->
+<!-- #* [S] Common Header *# -->
 #parse( "/common/header.vm" )
-#parse( "/common/snb.vm" )
-<!-- #* [E] Common Header, Snb *# -->
+<!-- #* [E] Common Header *# -->
 
-<!-- #* Velocty 주석 in HTML *# -->
 <body>
+	<!-- #* [S] Snb *# -->
+	#parse( "/common/snb.vm" )
+	<!-- #* [E] Snb *# -->
+	
 	<div class="container">
 		<div id="divPage">
-			<div class="page-header">
-			  <h1><a href="/test">Welocome</a> <small>Velocity</small></h1>
-			</div>
-			
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<h3 class="panel-title">기능 테스트</h3>
-				</div>
-			
-				<div class="panel-body">
-					<div class="btn-group" role="group" aria-label="...">
-						<button type="button" class="btn btn-default" id="btn_Save">저장</button>
-						<button type="button" class="btn btn-default" id="btn_Find">조회</button>
-						<button type="button" class="btn btn-default" id="btn_Page">페이지전환</button>
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">기능 테스트</h3>
+						</div>
+					
+						<div class="panel-body">
+							<div class="btn-group" role="group" aria-label="...">
+								<button type="button" class="btn btn-default" id="btn_Save">저장</button>
+								<button type="button" class="btn btn-default" id="btn_Find">조회</button>
+								<button type="button" class="btn btn-default" id="btn_Page">페이지전환</button>
+							</div>
+							<br/>
+							<div class="btn-group" role="group" aria-label="...">
+								<button type="button" class="btn btn-default" id="btn_RestTmpToJson">JSON파싱</button>
+								<button type="button" class="btn btn-default" id="btn_RestTmpToXml">XML파싱</button>
+								<button type="button" class="btn btn-default" id="btn_NaverRank">네이버실검순위:크롤링</button>
+							</div>
+							<br/>
+							<div class="btn-group" role="group" aria-label="...">
+								<button type="button" class="btn btn-default" id="btn_SendMail">테스트메일발송</button>
+								<button type="button" class="btn btn-default" id="btn_FindConfig">설정파일가져오기</button>
+								<button type="button" class="btn btn-default" id="btn_FindException">예외처리테스트</button>
+								<button type="button" class="btn btn-default" id="btn_SaveCookie">쿠키생성</button>
+							</div>
+						</div>
 					</div>
-					<br/>
-					<div class="btn-group" role="group" aria-label="...">
-						<button type="button" class="btn btn-default" id="btn_RestTmpToJson">JSON파싱</button>
-						<button type="button" class="btn btn-default" id="btn_RestTmpToXml">XML파싱</button>
-						<button type="button" class="btn btn-default" id="btn_NaverRank">네이버실검순위:크롤링</button>
+				</div>
+				
+				<div class="col-lg-6">	
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title">파일 업로드 테스트</h3>
+						</div>
+						<div class="panel-body">
+							<form id="frm_file" enctype="multipart/form-data" method="POST">
+								<input type="text" name="inp_name" value=""/>
+								<button type="button" class="btn btn-default" id="btn_SaveFileUpload">업로드</button>
+								<input type="file" name="inp_file1" id="inp_file1" />
+								<input type="file" name="inp_file2" id="inp_file2" />
+							</form>
+						</div>
 					</div>
-					<br/>
-					<div class="btn-group" role="group" aria-label="...">
-						<button type="button" class="btn btn-default" id="btn_SendMail">테스트메일발송</button>
-						<button type="button" class="btn btn-default" id="btn_FindConfig">설정파일가져오기</button>
-						<button type="button" class="btn btn-default" id="btn_FindException">예외처리테스트</button>
-						<button type="button" class="btn btn-default" id="btn_SaveCookie">쿠키생성</button>
-					</div>
 				</div>
 			</div>
-			
-			<div class="panel panel-info">
-				<div class="panel-heading">
-					<h3 class="panel-title">파일 업로드 테스트</h3>
-				</div>
-				<div class="panel-body">
-					<form id="frm_file" enctype="multipart/form-data" method="POST">
-						<input type="text" name="inp_name" value=""/>
-						<input type="file" name="inp_file1" id="inp_file1" />
-						<input type="file" name="inp_file2" id="inp_file2" />
-					</form>
-					<input type="button" id="btn_SaveFileUpload" value="업로드" />
-				</div>
-			</div>
-			
-			<div id="divValues" class="">
-			</div>
-			<br/><br/>
 			
 			<div class="panel panel-success">
 	  			<div class="panel-heading">
@@ -138,11 +138,11 @@
 	</div>
 	<script type="text/javascript">
 		/* #* Velocity 주석 in Javascript *# */
-		(function($J) {
+		(function(jQuery) {
 			/* #* [S] Document Ready *# */
-			$J(function() {
+			jQuery(function() {
 				/* #* [S] DataTables 그리드선언 *# */
-				var t = $J("table#tblUserList").DataTable({
+				var t = jQuery("table#tblUserList").DataTable({
 			        "columnDefs": [{
 			            "searchable"	: false,
 			            "orderable"		: false,
@@ -161,10 +161,10 @@
 			        } );
 			    }).draw();
 			    
-			    $J("table#tblUserInfo").DataTable();
+			    jQuery("table#tblUserInfo").DataTable();
 			    /* #* [E] DataTables 그리드선언 *# */
 			    
-				$J("#btn_Find").bind("click", function(e) {
+				jQuery("#btn_Find").bind("click", function(e) {
 					e.preventDefault();
 					
 					Controller.setAction("/test/findUserList");
@@ -174,15 +174,17 @@
 					});
 					Controller.submit(function(data){
 						console.log(data);
-						$J("#divValues").text(JSON.stringify(data));
+						jQuery("#commonModalLabel").text("Restful to Json Data");
+						jQuery("#commonModalBody").text(JSON.stringify(data));
+						jQuery("#commonModal").modal();
 					});
 				});
 				
-				$J("#btn_Save").bind("click", function(e) {
+				jQuery("#btn_Save").bind("click", function(e) {
 					e.preventDefault();
 					
 					var objUserInfo	= {"status":"insert"};
-					var tblUserInfo	= $J("#tblUserInfo input");
+					var tblUserInfo	= jQuery("#tblUserInfo input");
 					var nTblLenght	= tblUserInfo.length;
 					for(i=0; i<nTblLenght; i++){
 						objUserInfo[tblUserInfo.eq(i).attr("name")] = tblUserInfo.eq(i).val(); 
@@ -195,12 +197,12 @@
 						if ( data.status < 0) {
 							alert(data.message);
 						} else {
-							location.reload();
+							location.href="/test/";
 						}
 					});
 				});
 				
-				$J("#btn_Page").bind("click", function(e) {
+				jQuery("#btn_Page").bind("click", function(e) {
 					e.preventDefault();
 					
 					PageReplaceForm.setAction("/test");
@@ -208,12 +210,12 @@
 						"id":"apple"
 					});
 					PageReplaceForm.submit(function(data){
-						$J("#divPage").empty();
-						$J("#divPage").append(data);
+						jQuery("#divPage").empty();
+						jQuery("#divPage").append(data);
 					});
 				});
 				
-				$J("#btn_RestTmpToJson").bind("click", function(e) {
+				jQuery("#btn_RestTmpToJson").bind("click", function(e) {
 					e.preventDefault();
 					
 					Controller.setAction("/test/findRestTmpList");
@@ -224,11 +226,13 @@
 					});
 					Controller.submit(function(data){
 						console.log(data);
-						$J("#divValues").text(JSON.stringify(data.key));
+						jQuery("#commonModalLabel").text("Restful to Json Data");
+						jQuery("#commonModalBody").text(JSON.stringify(data.key));
+						jQuery("#commonModal").modal();
 					});
 				});
 				
-				$J("#btn_RestTmpToXml").bind("click", function(e) {
+				jQuery("#btn_RestTmpToXml").bind("click", function(e) {
 					e.preventDefault();
 					
 					Controller.setAction("/test/findRestTmpList");
@@ -239,22 +243,26 @@
 					});
 					Controller.submit(function(data){
 						console.log(data);
-						$J("#divValues").text(JSON.stringify(data.key));
+						jQuery("#commonModalLabel").text("Restful to Xml Data");
+						jQuery("#commonModalBody").text(JSON.stringify(data.key));
+						jQuery("#commonModal").modal();
 					});
 				});
 				
-				$J("#btn_NaverRank").bind("click", function(e) {
+				jQuery("#btn_NaverRank").bind("click", function(e) {
 					e.preventDefault();
 					
 					Controller.setAction("/test/findNaverRealRankList");
 					Controller.setParams({});
 					Controller.submit(function(data){
 						console.log(data);
-						$J("#divValues").text(JSON.stringify(data));
+						jQuery("#commonModalLabel").text("네이버 실시간 검색 순위");
+						jQuery("#commonModalBody").text(JSON.stringify(data));
+						jQuery("#commonModal").modal();
 					});
 				});
 				
-				$J("#btn_SendMail").bind("click", function(e) {
+				jQuery("#btn_SendMail").bind("click", function(e) {
 					e.preventDefault();
 					
 					Controller.setAction("/test/saveSendMail");
@@ -273,18 +281,20 @@
 					});
 				});
 				
-				$J("#btn_FindConfig").bind("click", function(e) {
+				jQuery("#btn_FindConfig").bind("click", function(e) {
 					e.preventDefault();
 					
 					Controller.setAction("/test/findBeanConfigure");
 					Controller.setParams({});
 					Controller.submit(function(data){
 						console.log(data);
-						$J("#divValues").text(JSON.stringify(data));
+						jQuery("#commonModalLabel").text("설정 Config 확인");
+						jQuery("#commonModalBody").text(JSON.stringify(data));
+						jQuery("#commonModal").modal();
 					});
 				});
 				
-				$J("#btn_FindException").bind("click", function(e) {
+				jQuery("#btn_FindException").bind("click", function(e) {
 					e.preventDefault();
 					
 					Controller.setAction("/test/findExceptionTest");
@@ -294,7 +304,7 @@
 					});
 				});
 				
-				$J("#btn_SaveCookie").bind("click", function(e) {
+				jQuery("#btn_SaveCookie").bind("click", function(e) {
 					e.preventDefault();
 					
 					var nCurrTime = new Date(), nStandTime = new Date();
@@ -312,22 +322,21 @@
 					});
 				});
 				
-				$J("#btn_SaveFileUpload").bind("click", function(e) {
+				jQuery("#btn_SaveFileUpload").bind("click", function(e) {
 					e.preventDefault();
 					
-					var formData = new FormData($J("form#frm_file")[0]);
+					var formData = new FormData(jQuery("form#frm_file")[0]);
 					
 					Controller.setAction("/test/saveFileUpload");
 					Controller.setParams( formData , "FILE" );
 					Controller.submit(function(data){
 						console.log(data);
 						alert("이미지 업로드가 완료되었습니다.");
-						location.reload();
 					});
 				});
 				
 				// Hidden Function
-				// $J("#inp_file1").fileupload(FileUploader.submit("/test/saveFileUpload"));
+				// jQuery("#inp_file1").fileupload(FileUploader.submit("/test/saveFileUpload"));
 			    
 			});
 			/* #* [E] Document Ready *# */

@@ -83,7 +83,7 @@ public class TestService extends CommonService {
 	
 				} 
 			} catch (Exception e) {
-				throw new BusinessException("오류가 발생했습니다.\n잠시 후 다시 시도해주세요.", paramMap);
+				throw new BusinessException("오류가 발생했습니다.<br/>잠시 후 다시 시도해주세요.", paramMap);
 			}
 		}
 		
@@ -200,7 +200,7 @@ public class TestService extends CommonService {
 				Matcher matcher = pattern.matcher(sOrgType);
 				
 				if ( !matcher.find() ) {
-					throw new BusinessException("이미지파일만 업로드 가능합니다.\n다시 시도해주세요.", paramMap);
+					throw new BusinessException("이미지파일만 업로드 가능합니다.<br/>다시 시도해주세요.", paramMap);
 				}
 				
 				
@@ -208,7 +208,7 @@ public class TestService extends CommonService {
 				long nFileSize = file.getSize();
 				
 				if ( nFileSize > 5000000 ) {
-					throw new BusinessException("파일 용량은 5MB를 초과할 수 없습니다.\n다시 시도해주세요.", paramMap);
+					throw new BusinessException("파일 용량은 5MB를 초과할 수 없습니다.<br/>다시 시도해주세요.", paramMap);
 				}
 			}
 		}
@@ -220,13 +220,11 @@ public class TestService extends CommonService {
 			file = request.getFile(itr.next());
 			
 			if ( !file.isEmpty() ) {
-//				Date date = new Date();
-//				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-//				dateFormat.format(date);
-				
+				Date date = new Date();
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 				String sOrgFileNm = file.getOriginalFilename();
 				String sOrgType = file.getContentType();
-				String sFileName = StringUtil.getUniqueString() + sOrgFileNm.substring(sOrgFileNm.lastIndexOf(".")).toLowerCase();
+				String sFileName = dateFormat.format(date) + "_" + StringUtil.getUniqueString() + sOrgFileNm.substring(sOrgFileNm.lastIndexOf(".")).toLowerCase();
 				long nFileSize = file.getSize();
 				
 				try {
@@ -240,7 +238,7 @@ public class TestService extends CommonService {
 					file.transferTo(new File(sFilePath + sFileName));
 					
 				} catch (Exception e) {
-					throw new BusinessException("파일업로드 중 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.", paramMap);
+					throw new BusinessException("파일업로드 중 오류가 발생했습니다.<br/>잠시 후 다시 시도해주세요.", paramMap);
 				}
 				
 				mRtnData.put("fileType", sOrgType);

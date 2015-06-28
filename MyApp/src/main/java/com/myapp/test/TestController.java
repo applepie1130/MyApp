@@ -133,9 +133,13 @@ public class TestController {
 		if ( "json".equals(ObjectUtils.toString(paramMap.get("restType"))) ) {
 			mTmpData.put("key", testSvc.findJSONList(paramMap));
 			sFile += "restTmpFromJson.json";
+			
 		} else if ( "xml".equals(ObjectUtils.toString(paramMap.get("restType"))) ) { 
 			mTmpData.put("key", testSvc.findXMLList(paramMap));
 			sFile += "restTmpFromXml.json";
+			
+		} else {
+			new BusinessException("restType을 지정해주세요.", paramMap);
 		}
 		
 		// writeFile
@@ -210,7 +214,7 @@ public class TestController {
 	public void findExceptionTest(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		
-		throw new BusinessException("오류가 발생했습니다.\n잠시 후 다시 시도해주세요.", paramMap);
+		throw new BusinessException("오류가 발생했습니다.<br/>잠시 후 다시 시도해주세요.", paramMap);
 	}
 	
 	/**
@@ -227,7 +231,7 @@ public class TestController {
 		
 		// 쿠키생성
 		if ( !RequestUtil.setCookie(paramMap, request, response) ) {
-			throw new BusinessException("쿠키생성 중 발생했습니다.\n잠시 후 다시 시도해주세요.", paramMap);
+			throw new BusinessException("쿠키생성 중 발생했습니다.<br/>잠시 후 다시 시도해주세요.", paramMap);
 		}
 		
 		// 쿠키읽기
@@ -266,7 +270,7 @@ public class TestController {
 		    process.waitFor();
 		    
 		} catch (Exception e) {
-			throw new BusinessException("커맨드 실행 중 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.", paramMap);
+			throw new BusinessException("커맨드 실행 중 오류가 발생했습니다.<br/>잠시 후 다시 시도해주세요.", paramMap);
 		}
 		
 		return mRtnData;

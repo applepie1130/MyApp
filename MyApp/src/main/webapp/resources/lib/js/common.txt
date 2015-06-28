@@ -91,6 +91,7 @@ var Controller = (function() {
 		this.url			= "";
 		this.data			= "";
 		this.processData	= true;
+		this.mimeType		= "";
 	};
 	
 	function setAction( prmUrl ) {
@@ -98,26 +99,30 @@ var Controller = (function() {
 	};
 	
 	function setParams( prm, type ) {
-		if ( typeof type !== "undefined" && type.toUpperCase() === "JSON" ) {
+		if ( typeof type !== "undefined" && type.toUpperCase() === "JSON" ) { // 리스트로 전송시, 서버에서는 @RequestBody 처리
 			this.contentType	= "application/json; charset=UTF-8";
 			this.data			= JSON.stringify(prm);
 			this.dataType		= "JSON";
 			this.processData	= true;
-		} else if ( typeof type !== "undefined" && type.toUpperCase() === "HTML" ) {
+			this.mimeType		= "";
+		} else if ( typeof type !== "undefined" && type.toUpperCase() === "HTML" ) {	// 페이지이동 처리시
 			this.contentType	= "application/x-www-form-urlencoded; charset=UTF-8";
 			this.data			= prm;
 			this.dataType		= type.toUpperCase();
 			this.processData	= true;
-		} else if ( typeof type !== "undefined" && type.toUpperCase() === "FILE" ) {
-			this.contentType	= "application/x-www-form-urlencoded; charset=UTF-8";
+			this.mimeType		= "";
+		} else if ( typeof type !== "undefined" && type.toUpperCase() === "FILE" ) {	// 파일첨부가 포함된 경우
+			this.contentType	= false;
 			this.data			= prm;
 			this.dataType		= "JSON";
 			this.processData	= false;
+			this.mimeType		= "multipart/form-data";
 		} else {
 			this.contentType	= "application/x-www-form-urlencoded; charset=UTF-8";
 			this.data			= prm;
 			this.dataType		= "JSON";
 			this.processData	= true;
+			this.mimeType		= "";
 		}
 	};
 	
@@ -144,12 +149,16 @@ var Controller = (function() {
     				var sCallbackMsgs;
     				
     				if ( jqXHR.responseText.indexOf("<html>") < 0 ) {
-    					sCallbackMsgs = decodeURIComponent(jqXHR.responseText) + "\n" + "(" + decodeURIComponent(jqXHR.statusText) + ", " + jqXHR.status + ")";
+    					//sCallbackMsgs = decodeURIComponent(jqXHR.responseText) + "<br/>" + "(" + decodeURIComponent(jqXHR.statusText) + ", " + jqXHR.status + ")";
+    					sCallbackMsgs = decodeURIComponent(jqXHR.responseText);
     				} else {
-    					sCallbackMsgs = "오류가 발생했습니다.\n잠시 후 다시 시도해주세요." + "\n" + "(" + decodeURIComponent(jqXHR.statusText) + ", " + jqXHR.status + ")";
+    					//sCallbackMsgs = "오류가 발생했습니다.<br/>잠시 후 다시 시도해주세요." + "<br/>" + "(" + decodeURIComponent(jqXHR.statusText) + ", " + jqXHR.status + ")";
+    					sCallbackMsgs = "오류가 발생했습니다.<br/>잠시 후 다시 시도해주세요.";
     				}
     				
-    				alert(sCallbackMsgs);
+    				jQuery("#alertModalLabel").text("오류 메시지");
+					jQuery("#alertModalBody").html(sCallbackMsgs);
+					jQuery("#alertModal").modal();
     				
     			} catch(e) {
     				console.log("e:", e);
@@ -204,13 +213,18 @@ var FileUploader = (function() {
 		        var isValid		= true;
 		        
 		        if (!(/png|jpe?g|gif/i).test(uploadFile.name)) {
-		            alert('png, jpg, gif 만 가능합니다');
+		            jQuery("#alertModalLabel").text("경고");
+					jQuery("#alertModalBody").text("png, jpg, gif 만 가능합니다.");
+					jQuery("#alertModal").modal();
+		            
 		            isValid		= false;
 		            
 		        } else if (uploadFile.size > 5000000) {
-		            alert('파일 용량은 5MB를 초과할 수 없습니다.');
-		            isValid		= false;
+		            jQuery("#alertModalLabel").text("경고");
+					jQuery("#alertModalBody").text("파일 용량은 5MB를 초과할 수 없습니다.");
+					jQuery("#alertModal").modal();
 		            
+		            isValid		= false;
 		        }
 		        
 		        if (isValid) {
@@ -223,7 +237,11 @@ var FileUploader = (function() {
 		    	console.log(data.result.fileType);
 		    },
 		    fail: function(e, data){
-		    	sCallbackMsgs = "오류가 발생했습니다.\n잠시 후 다시 시도해주세요.";			        	
+		    	sCallbackMsgs = "오류가 발생했습니다.<br/>잠시 후 다시 시도해주세요.";
+		    	
+		    	jQuery("#alertModalLabel").text("오류 메시지");
+				jQuery("#alertModalBody").html(sCallbackMsgs);
+				jQuery("#alertModal").modal();
 		    }
 		}
 	}
