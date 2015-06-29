@@ -241,6 +241,37 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 		<!-- [E] Websocket Configure -->
+		
+		<!-- [S] Social Plugin Configure -->
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-facebook</artifactId>
+			<version>1.0.3.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-core</artifactId>
+			<version>1.0.3.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-web</artifactId>
+			<version>1.0.3.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-facebook-web</artifactId>
+			<version>1.0.3.RELEASE</version>
+		</dependency>
+		<!-- [E] Social Plugin Configure -->
+		
+		<!-- [S] Http Client Configure -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5</version>
+		</dependency>
+		<!-- [E] Http Client Configure -->
 	</dependencies>
     <build>
         <plugins>

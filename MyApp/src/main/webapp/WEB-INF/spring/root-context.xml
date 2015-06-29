@@ -98,4 +98,19 @@
 		</property>
 	</bean>
 	<!-- [E] File Upload Conf -->
+	
+	<!-- [S] Social Facebook Conf -->
+	<bean id="connectionFactoryLocator"
+		class="org.springframework.social.connect.support.ConnectionFactoryRegistry">
+		<property name="connectionFactories">
+			<list>
+				<bean
+					class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
+					<constructor-arg value="${social.facebook.id}" />
+					<constructor-arg value="${social.facebook.key}" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	<!-- [E] Social Facebook Conf -->
 </beans>
