@@ -8,11 +8,21 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+import com.myapp.test.TestController;
 
 public class CommonService {
+	
 	@Autowired
 	private SqlSession session;
+	
+	private static final Logger logger = LoggerFactory.getLogger(TestController.class);
 	
 	/**
 	 * @Desc	: DB Table Select Query
@@ -52,8 +62,26 @@ public class CommonService {
 			out.println(scripts);
 			out.flush();
 		} catch (IOException e) {
-			throw new BusinessException("오류가 발생했습니다.\n잠시 후 다시 시도해주세요.", paramMap);
+			throw new BusinessException("오류가 발생했습니다.\n잠시 후 다시 시도해주세요.");
 		}
-
+	}
+	
+	
+	/**
+	 * @Desc	: BusinessException 핸들러
+	 * @Author	: 김성준
+	 * @Create	: 2015년 07월 3일 
+	 * @stereotype Utils
+	 */
+	@ExceptionHandler(BusinessException.class)
+	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+	public void handleBusinessException(BusinessException ex, HttpServletResponse response) throws IOException {
+		logger.info(ex.toString());
+		ex.printStackTrace();
+		
+		response.setContentType("text/html; charset=UTF-8");
+		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		response.getWriter().write(ex.getMessage());
+		response.flushBuffer();
 	}
 }

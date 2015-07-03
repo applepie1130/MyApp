@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.myapp.comm.BusinessException;
 import com.myapp.comm.CommonConfig;
+import com.myapp.comm.CommonService;
 import com.myapp.comm.FileService;
 import com.myapp.comm.MailService;
 import com.myapp.comm.RequestUtil;
@@ -29,19 +32,24 @@ import com.myapp.comm.RequestUtil;
  * Handles requests for the application home page.
  */
 @Controller
-public class TestController {
+public class TestController extends CommonService {
 	
 	/*
 	 * Define Service Variables
 	 */
 	@Autowired (required=false)
 	private TestService testSvc;
+	
 	@Autowired (required=false)
 	private MailService mailSvc;
+	
 	@Autowired (required=false)
 	private CommonConfig commonConfig;
+	
 	@Autowired (required=false)
 	private FileService fileSvc;
+	
+	private static final Logger logger = LoggerFactory.getLogger(TestController.class);
 	
 	/**
 	 * @Desc	: 메인페이지 테스트
@@ -139,7 +147,7 @@ public class TestController {
 			sFile += "restTmpFromXml.json";
 			
 		} else {
-			new BusinessException("restType을 지정해주세요.", paramMap);
+			new BusinessException("restType을 지정해주세요.");
 		}
 		
 		// writeFile
@@ -214,7 +222,7 @@ public class TestController {
 	public void findExceptionTest(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		
-		throw new BusinessException("오류가 발생했습니다.<br/>잠시 후 다시 시도해주세요.", paramMap);
+		throw new BusinessException("예외테스트 : 오류가 발생했습니다.<br/>잠시 후 다시 시도해주세요.");
 	}
 	
 	/**
@@ -231,7 +239,7 @@ public class TestController {
 		
 		// 쿠키생성
 		if ( !RequestUtil.setCookie(paramMap, request, response) ) {
-			throw new BusinessException("쿠키생성 중 발생했습니다.<br/>잠시 후 다시 시도해주세요.", paramMap);
+			throw new BusinessException("쿠키생성 중 발생했습니다.<br/>잠시 후 다시 시도해주세요.");
 		}
 		
 		// 쿠키읽기
@@ -270,7 +278,7 @@ public class TestController {
 		    process.waitFor();
 		    
 		} catch (Exception e) {
-			throw new BusinessException("커맨드 실행 중 오류가 발생했습니다.<br/>잠시 후 다시 시도해주세요.", paramMap);
+			throw new BusinessException("커맨드 실행 중 오류가 발생했습니다.<br/>잠시 후 다시 시도해주세요.");
 		}
 		
 		return mRtnData;

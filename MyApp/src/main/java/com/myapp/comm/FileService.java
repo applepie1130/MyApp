@@ -25,7 +25,16 @@ public class FileService {
 	public void writeFileToJSONMap (String sFile, Map mTmpData) {
 		// Write JSON File
 		try {
-			mapper.writeValue(new File(sFile), mTmpData);
+			File file = new File(sFile);
+			File fileParent = new File(file.getParent()); 
+			
+			// 파일 디렉토리가 없으면 디렉토리 생성, 있으면 파일쓰기
+			if ( !fileParent.exists() ) {
+				fileParent.mkdirs();
+			} else {
+				mapper.writeValue(file, mTmpData);
+			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -40,7 +49,16 @@ public class FileService {
 	public void writeFileToJSONList (String sFile, List rTmpData) {
 		// Write JSON File
 		try {
-			mapper.writeValue(new File(sFile), rTmpData);
+			File file = new File(sFile);
+			File fileParent = new File(file.getParent()); 
+			
+			// 파일 디렉토리가 없으면 디렉토리 생성, 있으면 파일쓰기
+			if ( !fileParent.exists() ) {
+				fileParent.mkdirs();
+			} else {
+				mapper.writeValue(file, rTmpData);
+			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

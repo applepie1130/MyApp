@@ -26,12 +26,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.myapp.comm.BusinessException;
 import com.myapp.comm.CommonConfig;
+import com.myapp.comm.CommonService;
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
-public class FacebookController {
+public class FacebookController extends CommonService {
 	
 	/*
 	 * Define Service Variables
@@ -70,7 +71,7 @@ public class FacebookController {
 		try {
 			response.sendRedirect(authorizeUrl);
 		} catch (IOException e) {
-			throw new BusinessException("페이스북 로그인 인증 중 오류가 발생했습니다.<br/>잠시 후 다시 시도해주세요.", paramMap);
+			throw new BusinessException("페이스북 로그인 인증 중 오류가 발생했습니다.<br/>잠시 후 다시 시도해주세요.");
 		}
 	}
 	

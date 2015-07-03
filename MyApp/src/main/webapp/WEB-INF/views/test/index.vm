@@ -251,7 +251,8 @@
 					Controller.setParams({
 						"from"		: "dbdbrhrvlfl@naver.com",
 						"fromNm"	: "김성준",
-						"to"		: "gptmd3@hanmail.net",
+						// "to"		: "gptmd3@hanmail.net",
+						"to"		: "applepie1130@nate.com",
 						"title"		: "[공지] 메일발송 테스트 입니다.",
 						"contents"	: "메일이 잘 가지요? ㅎㅎ",
 					});

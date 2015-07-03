@@ -15,7 +15,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MailService {
+public class MailService extends CommonService {
 	
 	@Autowired
 	private JavaMailSender mailSender;
@@ -41,11 +41,11 @@ public class MailService {
 			mailSender.send(message);
 			
 		} catch (MailSendException e) {
-			throw new BusinessException("메일발송 중 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.", paramMap);
+			throw new BusinessException("메일발송 중 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.");
 		} catch (MessagingException e) {
-			throw new BusinessException("메일발송 중 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.", paramMap);
+			throw new BusinessException("메일발송 중 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.");
 		} catch (UnsupportedEncodingException e) {
-			throw new BusinessException("메일발송 중 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.", paramMap);
+			throw new BusinessException("메일발송 중 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.");
 		}
 		
 		rRtnData.put("status", 1);
