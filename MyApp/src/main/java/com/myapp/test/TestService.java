@@ -189,6 +189,13 @@ public class TestService extends CommonService {
 		Iterator<String> itr =  request.getFileNames();
 		String sFilePath = "/batch/data/MyApp/file/";
 		
+		// 파일 디렉토리가 없으면 디렉토리 생성, 있으면 파일쓰기
+		File filePath = new File(sFilePath); 
+		
+		if ( !filePath.exists() ) {
+			filePath.mkdirs();
+		}
+		
 		// 파일검증
 		while ( itr.hasNext() ) {
 			file = request.getFile(itr.next());

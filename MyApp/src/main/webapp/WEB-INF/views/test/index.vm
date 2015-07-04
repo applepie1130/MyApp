@@ -35,6 +35,10 @@
 								<button type="button" class="btn btn-default" id="btn_FindException">예외처리테스트</button>
 								<button type="button" class="btn btn-default" id="btn_SaveCookie">쿠키생성</button>
 							</div>
+							<br/>
+							<div class="btn-group" role="group" aria-label="...">
+								<button type="button" class="btn btn-default" id="btn_LoginFacebook">페이스북으로 로그인</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -314,8 +318,16 @@
 					Controller.setParams( formData , "FILE" );
 					Controller.submit(function(data){
 						console.log(data);
-						alert("이미지 업로드가 완료되었습니다.");
+						jQuery("#commonModalLabel").text("이미지 업로드");
+						jQuery("#commonModalBody").text("이미지 업로드가 완료되었습니다.");
+						jQuery("#commonModal").modal();
 					});
+				});
+				
+				jQuery("#btn_LoginFacebook").bind("click", function(e) {
+					e.preventDefault();
+					
+					location.href="http://localhost:8080/facebook/login";
 				});
 				
 				// Hidden Function

@@ -49,6 +49,7 @@ public class MailService extends CommonService {
 		}
 		
 		rRtnData.put("status", 1);
+		
 		return rRtnData;
 	}
 }

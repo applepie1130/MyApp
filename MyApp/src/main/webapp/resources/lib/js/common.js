@@ -94,8 +94,20 @@ var Controller = (function() {
 		this.mimeType		= "";
 	};
 	
-	function setAction( prmUrl ) {
+	function setAction( prmUrl, method, type ) {
 		this.url = prmUrl;
+		
+		if ( typeof method !== "undefined" && method.toUpperCase() === "GET" ) {
+			this.method = "GET";
+		} else {
+			this.method = "POST";
+		}
+		
+		if ( typeof type !== "undefined" && type.toUpperCase() === "JSONP" ) {
+			this.dataType = "JSONP";
+		} else {
+			this.dataType = "JSON";
+		}
 	};
 	
 	function setParams( prm, type ) {

@@ -12,7 +12,7 @@ import org.codehaus.jackson.type.TypeReference;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FileService {
+public class FileService extends CommonService {
 	
 	private ObjectMapper mapper = new ObjectMapper();
 	
@@ -26,17 +26,17 @@ public class FileService {
 		// Write JSON File
 		try {
 			File file = new File(sFile);
-			File fileParent = new File(file.getParent()); 
+			File filePath = new File(file.getParent()); 
 			
 			// 파일 디렉토리가 없으면 디렉토리 생성, 있으면 파일쓰기
-			if ( !fileParent.exists() ) {
-				fileParent.mkdirs();
-			} else {
-				mapper.writeValue(file, mTmpData);
+			if ( !filePath.exists() ) {
+				filePath.mkdirs();
 			}
 			
+			mapper.writeValue(file, mTmpData);
+			
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new BusinessException("오류가 발생했습니다.<br/>잠시 후 다시 시도해주세요.");
 		}
 	}
 	
@@ -50,17 +50,17 @@ public class FileService {
 		// Write JSON File
 		try {
 			File file = new File(sFile);
-			File fileParent = new File(file.getParent()); 
+			File filePath = new File(file.getParent()); 
 			
 			// 파일 디렉토리가 없으면 디렉토리 생성, 있으면 파일쓰기
-			if ( !fileParent.exists() ) {
-				fileParent.mkdirs();
-			} else {
-				mapper.writeValue(file, rTmpData);
+			if ( !filePath.exists() ) {
+				filePath.mkdirs();
 			}
 			
+			mapper.writeValue(file, rTmpData);
+			
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new BusinessException("오류가 발생했습니다.<br/>잠시 후 다시 시도해주세요.");
 		}
 	}
 	
@@ -77,7 +77,7 @@ public class FileService {
 		try {
 			mRtnData = mapper.readValue(new File(sFile), new TypeReference<HashMap<String,Object>>(){});
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new BusinessException("오류가 발생했습니다.<br/>잠시 후 다시 시도해주세요.");
 		}
 		
 		return mRtnData;
@@ -96,7 +96,7 @@ public class FileService {
 		try {
 			rRtnData = mapper.readValue(new File(sFile), new TypeReference<List>(){});
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new BusinessException("오류가 발생했습니다.<br/>잠시 후 다시 시도해주세요.");
 		}
 		
 		return rRtnData;
