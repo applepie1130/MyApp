@@ -1,6 +1,7 @@
 package com.myapp.social;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.myapp.comm.BusinessException;
 import com.myapp.comm.CommonService;
+import com.myapp.comm.RequestUtil;
 
 /**
  * Handles requests for the application home page.
@@ -101,6 +103,23 @@ public class FacebookController extends CommonService {
 		logger.info("======================");
 		logger.info(sReferer);
 		logger.info("======================");
+		
+		// 페이스북 세션 키 암호화
+		String sSessionKey = "f" + userProfile.getId() + System.currentTimeMillis();
+		// todo Encrypt..(by using bcrypt)
+
+		// 페이스북 로그인 세션 쿠키생성
+		Map mCookieInfo = new HashMap<String, Object>();
+		mCookieInfo.put("cookieName", "SNS_SESSION");
+		mCookieInfo.put("cookieValue", sSessionKey);
+		mCookieInfo.put("cookieExpire", -1);
+		mCookieInfo.put("cookiePath", "/");
+		
+		System.out.println("세션키 " + sSessionKey);
+		
+		if ( !RequestUtil.setCookie(mCookieInfo, request, response)) {
+			throw new BusinessException("쿠키생성 중 발생했습니다.<br/>잠시 후 다시 시도해주세요.");
+		}
 		
 		// redirect
 		return "redirect:" + sReferer;

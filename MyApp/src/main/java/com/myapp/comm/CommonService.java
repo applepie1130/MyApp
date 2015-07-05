@@ -22,7 +22,10 @@ public class CommonService {
 	@Autowired
 	private SqlSession session;
 	
-	private static final Logger logger = LoggerFactory.getLogger(TestController.class);
+	// SNS 로그인 확인 전역변수
+	public static Boolean SNS_SESSION_LOGIN_YN = false;
+	
+	private static final Logger logger = LoggerFactory.getLogger(CommonService.class);
 	
 	/**
 	 * @Desc	: DB Table Select Query

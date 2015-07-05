@@ -6,7 +6,8 @@
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
 						http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
 						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
@@ -55,6 +56,16 @@
 		</beans:property>
 	</beans:bean>
 	<!-- [E] Cacheable Config -->
+	
+	<!-- [S] Handler Interceptor -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/resources/**" />
+			<beans:bean class="com.myapp.comm.CommonInterceptor"  />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	<!-- [E] Handler Interceptor -->
 	
 	<context:component-scan base-package="com.myapp" />
 </beans:beans>

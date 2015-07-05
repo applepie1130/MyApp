@@ -113,14 +113,4 @@
 		</property>
 	</bean>
 	<!-- [E] Social Facebook Conf -->
-	
-	<!-- [S] Handler Interceptor -->
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/**" />
-			<mvc:exclude-mapping path="/resources/**" />
-			<bean class="com.myapp.comm.CommonInterceptor" />
-		</mvc:interceptor>
-	</mvc:interceptors>
-	<!-- [E] Handler Interceptor -->
 </beans>
