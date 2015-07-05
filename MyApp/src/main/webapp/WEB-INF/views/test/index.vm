@@ -338,3 +338,7 @@
 		}(jQuery));
 	</script>
 </body>
+
+<!-- #* [S] Common Footer *# -->
+#parse( "/common/footer.vm" )
+<!-- #* [E] Common Footer *# -->
