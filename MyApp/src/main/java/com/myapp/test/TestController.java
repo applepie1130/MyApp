@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.myapp.comm.BusinessException;
 import com.myapp.comm.CommonConfig;
-import com.myapp.comm.CommonService;
+import com.myapp.comm.CommonController;
 import com.myapp.comm.FileService;
 import com.myapp.comm.MailService;
 import com.myapp.comm.RequestUtil;
@@ -32,7 +32,7 @@ import com.myapp.comm.RequestUtil;
  * Handles requests for the application home page.
  */
 @Controller
-public class TestController extends CommonService {
+public class TestController extends CommonController {
 	
 	/*
 	 * Define Service Variables
