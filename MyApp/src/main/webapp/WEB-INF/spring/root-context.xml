@@ -31,7 +31,6 @@
 	        </list>
         </property>
     </bean>
-    
     <!-- [E] Configurer config -->
 	
 	<!-- [S] SQL DataSource config -->

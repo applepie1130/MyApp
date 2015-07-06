@@ -1,6 +1,9 @@
 /*! Common v0.0.1 | (c) 2014, 2015 SungJun All rights reserved */
+
+"use strict";
+
 /* For using jQuery */
-$J = $.noConflict();
+var $J = $.noConflict();
 /**
  * 	Implement SpinnerController
  */

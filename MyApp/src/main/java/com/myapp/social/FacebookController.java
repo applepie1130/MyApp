@@ -11,6 +11,7 @@ import org.apache.commons.lang.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.facebook.api.Facebook;
@@ -104,18 +105,19 @@ public class FacebookController extends CommonService {
 		logger.info(sReferer);
 		logger.info("======================");
 		
-		// 페이스북 세션 키 암호화
+		// 페이스북 세션 키 암호화 (Bcrypt)
 		String sSessionKey = "f" + userProfile.getId() + System.currentTimeMillis();
-		// todo Encrypt..(by using bcrypt)
+		String sEncodedSessionKey = BCrypt.hashpw(sSessionKey, BCrypt.gensalt(12));
 
 		// 페이스북 로그인 세션 쿠키생성
 		Map mCookieInfo = new HashMap<String, Object>();
 		mCookieInfo.put("cookieName", "SNS_SESSION");
-		mCookieInfo.put("cookieValue", sSessionKey);
+		mCookieInfo.put("cookieValue", sEncodedSessionKey);
 		mCookieInfo.put("cookieExpire", -1);
 		mCookieInfo.put("cookiePath", "/");
 		
 		System.out.println("세션키 " + sSessionKey);
+		System.out.println("암호화 세션키 " + sEncodedSessionKey);
 		
 		if ( !RequestUtil.setCookie(mCookieInfo, request, response)) {
 			throw new BusinessException("쿠키생성 중 발생했습니다.<br/>잠시 후 다시 시도해주세요.");
