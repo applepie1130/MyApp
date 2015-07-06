@@ -12,12 +12,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-public class CommonHandler {
+public class SuperDelegationAdapter {
 	
 	// SNS 로그인 확인 전역변수
 	public static Boolean SNS_SESSION_LOGIN_YN = false;
 	
-	private static final Logger logger = LoggerFactory.getLogger(CommonHandler.class);
+	private static final Logger logger = LoggerFactory.getLogger(SuperDelegationAdapter.class);
 	
 	/**
 	 * @Desc	: Execute JavaScript 

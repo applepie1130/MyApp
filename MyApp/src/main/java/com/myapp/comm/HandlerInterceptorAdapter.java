@@ -10,7 +10,7 @@ import org.apache.commons.lang.ObjectUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-public class CommonInterceptor extends CommonService implements HandlerInterceptor {
+public class HandlerInterceptorAdapter extends SuperDelegationAdapter implements HandlerInterceptor {
 	
 	/**
 	 * @Desc	: 전처리기

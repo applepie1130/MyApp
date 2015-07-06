@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class CommonService extends CommonHandler {
+public class CommonService extends SuperDelegationAdapter {
 	
 	@Autowired
 	private SqlSession session;
