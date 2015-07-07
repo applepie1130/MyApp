@@ -17,6 +17,9 @@ public class SuperDelegationAdapter {
 	// SNS 로그인 확인 전역변수
 	public static Boolean SNS_SESSION_LOGIN_YN = false;
 	
+	// 모바일 기기 확인 전역변수
+	public static Boolean USER_AGENT_MOBILE_YN = false;
+	
 	private static final Logger logger = LoggerFactory.getLogger(SuperDelegationAdapter.class);
 	
 	/**

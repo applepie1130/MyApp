@@ -4,6 +4,12 @@
 
 /* For using jQuery */
 var $J = $.noConflict();
+
+/* Mouse Click Disabled */
+$J(this).on("contextmenu", function(e){ return false; });
+$J(this).on("selectstart", function(e){ return false; });
+$J(this).on("dragstart", function(e){ return false; });
+
 /**
  * 	Implement SpinnerController
  */

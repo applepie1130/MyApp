@@ -1,6 +1,15 @@
 /*! Common v0.0.1 | (c) 2014, 2015 SungJun All rights reserved */
+
+"use strict";
+
 /* For using jQuery */
-$J = $.noConflict();
+var $J = $.noConflict();
+
+/* Mouse Click Disabled */
+$J(this).on("contextmenu", function(e){ return false; });
+$J(this).on("selectstart", function(e){ return false; });
+$J(this).on("dragstart", function(e){ return false; });
+
 /**
  * 	Implement SpinnerController
  */
@@ -94,8 +103,20 @@ var Controller = (function() {
 		this.mimeType		= "";
 	};
 	
-	function setAction( prmUrl ) {
+	function setAction( prmUrl, method, type ) {
 		this.url = prmUrl;
+		
+		if ( typeof method !== "undefined" && method.toUpperCase() === "GET" ) {
+			this.method = "GET";
+		} else {
+			this.method = "POST";
+		}
+		
+		if ( typeof type !== "undefined" && type.toUpperCase() === "JSONP" ) {
+			this.dataType = "JSONP";
+		} else {
+			this.dataType = "JSON";
+		}
 	};
 	
 	function setParams( prm, type ) {
@@ -156,7 +177,7 @@ var Controller = (function() {
     					sCallbackMsgs = "오류가 발생했습니다.<br/>잠시 후 다시 시도해주세요.";
     				}
     				
-    				jQuery("#alertModalLabel").text("오류 메시지");
+    				jQuery("#alertModalLabel").text("ERROR");
 					jQuery("#alertModalBody").html(sCallbackMsgs);
 					jQuery("#alertModal").modal();
     				
@@ -213,14 +234,14 @@ var FileUploader = (function() {
 		        var isValid		= true;
 		        
 		        if (!(/png|jpe?g|gif/i).test(uploadFile.name)) {
-		            jQuery("#alertModalLabel").text("경고");
+		            jQuery("#alertModalLabel").text("WARNNING");
 					jQuery("#alertModalBody").text("png, jpg, gif 만 가능합니다.");
 					jQuery("#alertModal").modal();
 		            
 		            isValid		= false;
 		            
 		        } else if (uploadFile.size > 5000000) {
-		            jQuery("#alertModalLabel").text("경고");
+		            jQuery("#alertModalLabel").text("WARNNING");
 					jQuery("#alertModalBody").text("파일 용량은 5MB를 초과할 수 없습니다.");
 					jQuery("#alertModal").modal();
 		            
@@ -239,7 +260,7 @@ var FileUploader = (function() {
 		    fail: function(e, data){
 		    	sCallbackMsgs = "오류가 발생했습니다.<br/>잠시 후 다시 시도해주세요.";
 		    	
-		    	jQuery("#alertModalLabel").text("오류 메시지");
+		    	jQuery("#alertModalLabel").text("ERROR");
 				jQuery("#alertModalBody").html(sCallbackMsgs);
 				jQuery("#alertModal").modal();
 		    }

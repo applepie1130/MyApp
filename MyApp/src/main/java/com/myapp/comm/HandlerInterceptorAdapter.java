@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.springframework.mobile.device.site.SitePreference;
+import org.springframework.mobile.device.site.SitePreferenceUtils;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,13 +22,8 @@ public class HandlerInterceptorAdapter extends SuperDelegationAdapter implements
 	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		
+		// Referer
 		String sReferer = request.getHeader("REFERER");
-		
-		System.out.println("================");
-		System.out.println("전처리기 실행 !!!!!!");
-		System.out.println("Referer : " + sReferer);
-		System.out.println("================");
 		
 		// SNS 로그인 확인 
 		Map mCookieInfo = new HashMap<String, Object>();
@@ -40,8 +38,23 @@ public class HandlerInterceptorAdapter extends SuperDelegationAdapter implements
 			SNS_SESSION_LOGIN_YN = false;
 		}
 		
-		System.out.println(mRtnCookieInfo.get("SNS_SESSION"));
-		System.out.println("로그인 한 상태인가 ? : " + SNS_SESSION_LOGIN_YN);
+		// 모바일 기기 확인
+		SitePreference currentSitePreference = SitePreferenceUtils.getCurrentSitePreference(request);
+		System.out.println("--------------------------");
+		System.out.println(currentSitePreference);
+		System.out.println("--------------------------");
+//		if(currentSitePreference.isMobile()){
+//			USER_AGENT_MOBILE_YN = true;                  
+//		} else {
+//			USER_AGENT_MOBILE_YN = false;
+//		}   
+		
+		System.out.println("==============PRE HANDLE==================");
+		System.out.println("Referer\t\t: " + sReferer);
+		System.out.println("LoginSession\t: " + mRtnCookieInfo.get("SNS_SESSION"));
+		System.out.println("Login ?\t\t: " + SNS_SESSION_LOGIN_YN);
+		System.out.println("isMobile ?\t: " + USER_AGENT_MOBILE_YN);
+		System.out.println("==============PRE HANDLE==================");
 		
 		return true;
 	}

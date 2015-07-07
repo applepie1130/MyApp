@@ -15,7 +15,14 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
+	
+	<!--><annotation-driven />-->
+	<mvc:annotation-driven>
+		<mvc:argument-resolvers>
+			<beans:bean class="org.springframework.mobile.device.DeviceWebArgumentResolver" />	      
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+	
     <cache:annotation-driven />
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	
@@ -64,6 +71,8 @@
 			<mvc:exclude-mapping path="/resources/**" />
 			<beans:bean class="com.myapp.comm.HandlerInterceptorAdapter"  />
 		</mvc:interceptor>
+		<beans:bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
+		<beans:bean class="org.springframework.mobile.device.site.SitePreferenceHandlerInterceptor" />
 	</mvc:interceptors>
 	<!-- [E] Handler Interceptor -->
 	
