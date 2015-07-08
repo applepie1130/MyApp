@@ -3,13 +3,15 @@
 <mapper namespace="userQry" >
 	<!-- selectUserList -->
     <select id ="selectUserList" parameterType="java.util.Map" resultType= "java.util.Map">
-		select a.user_sq		as user_sq,
-			   a.user_id		as user_id,
-			   a.user_nm		as user_nm,
-			   a.addr1			as addr1,
-			   a.addr2			as addr2,
-			   a.zipcode		as zipcode,
-			   a.phone			as phone
+		select a.user_sq									as user_sq,
+			   a.user_id									as user_id,
+			   a.user_nm									as user_nm,
+			   a.addr1										as addr1,
+			   a.addr2										as addr2,
+			   a.zipcode									as zipcode,
+			   a.phone										as phone,
+			   date_format(a.insert_dt, '%Y%m%d%H%i%s')		as insert_dt,
+			   date_format(a.update_dt, '%Y%m%d%H%i%s')		as update_dt			   
 		  from myapp.user_info a
 		 where 1 = 1
 		<if test="user_nm != null">
@@ -30,14 +32,18 @@
             addr1,
             addr2,
             zipcode,
-            phone
+            phone,
+            insert_dt,
+            update_dt
         ) values(
             #{user_id},
             #{user_nm},
             #{addr1},
             #{addr2},
             #{zipcode},
-            #{phone}
+            #{phone},
+            now(),
+            now()
         )
     </insert>
     
@@ -49,7 +55,8 @@
 			   addr1 = #{addr1}, 
 			   addr2 = #{addr2}, 
 			   zipcode = #{zipcode}, 
-			   phone = #{phone}
+			   phone = #{phone},
+			   update_dt = now()
 	     where user_sq = #{user_sq} 
     </update>
     

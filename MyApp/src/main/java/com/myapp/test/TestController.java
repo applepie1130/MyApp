@@ -32,6 +32,7 @@ import com.myapp.comm.RequestUtil;
  * Handles requests for the application home page.
  */
 @Controller
+@RequestMapping("/test")
 public class TestController extends CommonController {
 	
 	/*
@@ -57,7 +58,7 @@ public class TestController extends CommonController {
 	 * @Create	: 2015년 05월 16일 
 	 * @stereotype Action
 	 */
-	@RequestMapping(value = "/test")
+	@RequestMapping(value = {"", "/"})
 	public String userView(@RequestParam Map<String, Object> paramMap, Model model, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		
@@ -77,7 +78,7 @@ public class TestController extends CommonController {
 	 * @Create	: 2015년 05월 16일 
 	 * @stereotype Action
 	 */
-	@RequestMapping(value = "/test/index")
+	@RequestMapping(value = "/index")
 	public String userView2(@RequestParam Map<String, Object> paramMap, Model model, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		
@@ -87,7 +88,7 @@ public class TestController extends CommonController {
 		
 		model.addAttribute("rData", findUserList);
 		
-		return "test/index";
+		return "/test/index";
 	}
 	
 	/**
@@ -97,7 +98,7 @@ public class TestController extends CommonController {
 	 * @stereotype Action
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/test/findUserList", method = RequestMethod.POST)
+	@RequestMapping(value = "/findUserList", method = RequestMethod.POST)
 	public List findUserList(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		
@@ -113,7 +114,7 @@ public class TestController extends CommonController {
 	 * @stereotype Action
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/test/saveUserInfo", method = RequestMethod.POST)
+	@RequestMapping(value = "/saveUserInfo", method = RequestMethod.POST)
 	public Map saveUserInfo(@RequestBody Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		
@@ -130,7 +131,7 @@ public class TestController extends CommonController {
 	 * @stereotype Action
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/test/findRestTmpList", method = RequestMethod.POST)
+	@RequestMapping(value = "/findRestTmpList", method = RequestMethod.POST)
 	public  Map findRestTmpList(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		
@@ -166,7 +167,7 @@ public class TestController extends CommonController {
 	 * @stereotype Action
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/test/findNaverRealRankList", method = RequestMethod.POST)
+	@RequestMapping(value = "/findNaverRealRankList", method = RequestMethod.POST)
 	public  List findNaverRealRankList(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		
@@ -185,7 +186,7 @@ public class TestController extends CommonController {
 	 * @stereotype Action
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/test/saveSendMail", method = RequestMethod.POST)
+	@RequestMapping(value = "/saveSendMail", method = RequestMethod.POST)
 	public Map saveSendMail(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		
@@ -201,7 +202,7 @@ public class TestController extends CommonController {
 	 * @stereotype Action
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/test/findBeanConfigure", method = RequestMethod.POST)
+	@RequestMapping(value = "/findBeanConfigure", method = RequestMethod.POST)
 	public Map findBeanConfigure(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		
@@ -218,7 +219,7 @@ public class TestController extends CommonController {
 	 * @Create	: 2015년 05월 16일 
 	 * @stereotype Action
 	 */
-	@RequestMapping(value = "/test/findExceptionTest", method = RequestMethod.POST)
+	@RequestMapping(value = "/findExceptionTest", method = RequestMethod.POST)
 	public void findExceptionTest(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		
@@ -232,7 +233,7 @@ public class TestController extends CommonController {
 	 * @stereotype Action
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/test/saveCookieTest", method = RequestMethod.POST)
+	@RequestMapping(value = "/saveCookieTest", method = RequestMethod.POST)
 	public Map saveCookieTest(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		Map mRtnData = new HashMap<String, Object>();
@@ -255,7 +256,7 @@ public class TestController extends CommonController {
 	 * @stereotype Action
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/test/findRuntimeExecTest", method = RequestMethod.POST)
+	@RequestMapping(value = "/findRuntimeExecTest", method = RequestMethod.POST)
 	public Map findRuntimeExecTest(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		Map mRtnData = new HashMap<String, Object>();
@@ -291,7 +292,7 @@ public class TestController extends CommonController {
 	 * @stereotype Action
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/test/saveFileUpload", method = RequestMethod.POST)
+	@RequestMapping(value = "/saveFileUpload", method = RequestMethod.POST)
 	public Map saveFileUpload(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		paramMap = RequestUtil.getParameter(paramMap, request, response);
 		

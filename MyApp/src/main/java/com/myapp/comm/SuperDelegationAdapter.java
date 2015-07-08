@@ -2,6 +2,7 @@ package com.myapp.comm;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,9 @@ public class SuperDelegationAdapter {
 	
 	// 모바일 기기 확인 전역변수
 	public static Boolean USER_AGENT_MOBILE_YN = false;
+	
+	// 사용자 IP
+	public static String USER_IP = "";
 	
 	private static final Logger logger = LoggerFactory.getLogger(SuperDelegationAdapter.class);
 	
