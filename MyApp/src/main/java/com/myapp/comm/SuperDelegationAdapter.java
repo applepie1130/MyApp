@@ -2,27 +2,22 @@ package com.myapp.comm;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 public class SuperDelegationAdapter {
 	
-	// SNS 로그인 확인 전역변수
-	public static Boolean SNS_SESSION_LOGIN_YN = false;
-	
-	// 모바일 기기 확인 전역변수
-	public static Boolean USER_AGENT_MOBILE_YN = false;
-	
-	// 사용자 IP
-	public static String USER_IP = "";
+	// 전역 객체
+	@Autowired
+	public GLIO GLIO;
 	
 	private static final Logger logger = LoggerFactory.getLogger(SuperDelegationAdapter.class);
 	

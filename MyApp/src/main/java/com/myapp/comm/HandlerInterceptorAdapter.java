@@ -32,32 +32,33 @@ public class HandlerInterceptorAdapter extends SuperDelegationAdapter implements
 		mRtnCookieInfo = RequestUtil.getCookie(mCookieInfo, request, response);
 		
 		if ( !StringUtil.isEmpty(ObjectUtils.toString(mRtnCookieInfo.get("SNS_SESSION"))) ) {
-			SNS_SESSION_LOGIN_YN = true;
+			GLIO.setSnsLoginStatus(true);
 		} else {
-			SNS_SESSION_LOGIN_YN = false;
+			GLIO.setSnsLoginStatus(false);
 		}
 		
 		// 모바일 기기 확인
 		SitePreference currentSitePreference = SitePreferenceUtils.getCurrentSitePreference(request);
 		if(currentSitePreference.isMobile()){
-			USER_AGENT_MOBILE_YN = true;                  
+			GLIO.setUserAgentMobileYn(true);
 		} else {
-			USER_AGENT_MOBILE_YN = false;
+			GLIO.setUserAgentMobileYn(false);
 		}
 		
 		// 사용자 IP 확인
-		USER_IP = request.getHeader("X-FORWARDED-FOR");  
-		if (USER_IP == null) {  
-			USER_IP = request.getRemoteAddr();  
+		GLIO.setUserIp(request.getHeader("X-FORWARDED-FOR"));
+		if (GLIO.getUserIp() == null) {
+			GLIO.setUserIp(request.getRemoteAddr());
 		}
 		
 		System.out.println("");
 		System.out.println("==============PRE HANDLE==================");
 		System.out.println("Referer\t\t: " + sReferer);
 		System.out.println("LoginSession\t: " + mRtnCookieInfo.get("SNS_SESSION"));
-		System.out.println("Login ?\t\t: " + SNS_SESSION_LOGIN_YN);
-		System.out.println("isMobile ?\t: " + USER_AGENT_MOBILE_YN);
-		System.out.println("Client IP ?\t: " + USER_IP);
+		System.out.println("Login ?\t\t: " + GLIO.getSnsLoginStatus());
+		System.out.println("isMobile ?\t: " + GLIO.getUserAgentMobileYn());
+		System.out.println("Client IP ?\t: " + GLIO.getUserIp());
+		System.out.println("Instance Info \t" + GLIO);
 		System.out.println("==============PRE HANDLE==================");
 		System.out.println("");
 		

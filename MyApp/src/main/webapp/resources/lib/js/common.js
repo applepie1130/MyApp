@@ -147,7 +147,7 @@ var Controller = (function() {
 		}
 	};
 	
-	function submit( callback ) {
+	function submit( callback, callback2 ) {
 		$J.ajax({
     		url			: this.url,
     		type		: this.method,
@@ -161,6 +161,10 @@ var Controller = (function() {
     			var rtnData = data;
     			try {
     				callback(rtnData, status, jqXHR);
+    				
+    				if ( typeof callback2 !== "undefined" ) {
+    					callback2(rtnData, status, jqXHR);
+    				}
     			} catch(e) {
     				console.log("e:", e);
     			}
@@ -218,9 +222,42 @@ var PageReplaceForm = (function() {
 		"setParams"	 		: setParams,
 		"submit"			: submit
 	}
-}());	
+}());
+
+/**
+ * 	Implement PageReplaceForm
+ */
+var PopupContoller = (function() {
+	function setAction( prmUrl ) {
+		Controller.setAction( prmUrl );
+	};
+	
+	function setParams( prm ) {
+		Controller.setParams( prm, "html" );
+	};
+	
+	function submit( callback ) { 
+		Controller.submit(function(data) {
+			jQuery("#commonModalLabel").text("Restful to Json Data");
+			jQuery("#commonModalBody").empty();
+			jQuery("#commonModalBody").append(data);
+			jQuery("#commonModal").modal();
+		}, callback);
+	};
+	
+	return {
+		"setAction"			: setAction,
+		"setParams"	 		: setParams,
+		"submit"			: submit
+	}
+}());
 
 
+/*
+ * ************************************************
+ * *************** Unused Method ****************** 
+ * ************************************************
+ * */
 /**
  * 	Implement FileUploadConfig
  */
