@@ -39,6 +39,7 @@
 							<br/>
 							<div class="btn-group" role="group" aria-label="...">
 								<button type="button" class="btn btn-default" id="btn_LoginFacebook">페이스북으로 로그인</button>
+								<button type="button" class="btn btn-default" id="btn_LoginTwitter">트위터으로 로그인</button>
 							</div>
 						</div>
 					</div>
@@ -331,6 +332,12 @@
 					e.preventDefault();
 					
 					location.href="http://localhost:8080/facebook/login";
+				});
+				
+				jQuery("#btn_LoginTwitter").bind("click", function(e) {
+					e.preventDefault();
+					
+					location.href="http://localhost:8080/twitter/login";
 				});
 				
 				jQuery("#btn_PageOpenPop").bind("click", function(e) {

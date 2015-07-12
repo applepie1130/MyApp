@@ -59,7 +59,7 @@ public class FacebookController extends CommonService {
 	 */
 	@RequestMapping(value = "/facebook/login", method = RequestMethod.GET)
 	public void findFacebookLogin(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
-		connectionFactory = (FacebookConnectionFactory) factoryLocator.getConnectionFactory("facebook");
+		connectionFactory = (FacebookConnectionFactory) factoryLocator.getConnectionFactory(Facebook.class);
 		auth2Operations = connectionFactory.getOAuthOperations();
 		OAuth2Parameters parameters = new OAuth2Parameters();
 		String sRedirectUrl = "http://localhost:8080/facebook/accessResult";

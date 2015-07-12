@@ -12,10 +12,6 @@ public class CommonConfig {
 	private String serviceShutDownStartDt;
 	@Value("${service.shutDownEndDt}")
 	private String serviceShutDownEndDt;
-	@Value("${social.facebook.id}")
-	private String socialFacebookId;
-	@Value("${social.facebook.key}")
-	private String socialFacebookKey;
 	
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer properties() {
@@ -37,19 +33,5 @@ public class CommonConfig {
 	 */
 	public String getServiceShutDownEndDt() {
 		return serviceShutDownEndDt;
-	}
-	
-	/**
-	 * @return the socialFacebookId
-	 */
-	public String getSocialFacebookId() {
-		return socialFacebookId;
-	}
-
-	/**
-	 * @return the socialFacebookKey
-	 */
-	public String getSocialFacebookKey() {
-		return socialFacebookKey;
 	}
 }

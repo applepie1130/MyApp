@@ -98,18 +98,23 @@
 	</bean>
 	<!-- [E] File Upload Conf -->
 	
-	<!-- [S] Social Facebook Conf -->
+	<!-- [S] Social Facebook, Twitter Conf -->
 	<bean id="connectionFactoryLocator"
 		class="org.springframework.social.connect.support.ConnectionFactoryRegistry">
 		<property name="connectionFactories">
 			<list>
 				<bean
 					class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
-					<constructor-arg value="${social.facebook.id}" />
-					<constructor-arg value="${social.facebook.key}" />
+					<constructor-arg value="${spring.social.facebook.appId}" />
+					<constructor-arg value="${spring.social.facebook.appSecret}" />
+				</bean>
+				<bean
+					class="org.springframework.social.twitter.connect.TwitterConnectionFactory">
+					<constructor-arg value="${spring.social.twitter.appId}" />
+					<constructor-arg value="${spring.social.twitter.appSecret}" />
 				</bean>
 			</list>
 		</property>
 	</bean>
-	<!-- [E] Social Facebook Conf -->
+	<!-- [E] Social Facebook, Twitter Conf -->
 </beans>
