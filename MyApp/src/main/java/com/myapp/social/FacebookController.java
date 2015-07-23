@@ -62,7 +62,7 @@ public class FacebookController extends CommonService {
 		connectionFactory = (FacebookConnectionFactory) factoryLocator.getConnectionFactory(Facebook.class);
 		auth2Operations = connectionFactory.getOAuthOperations();
 		OAuth2Parameters parameters = new OAuth2Parameters();
-		String sRedirectUrl = "http://localhost:8080/facebook/accessResult";
+		String sRedirectUrl = "http://58.232.121.39:8080/facebook/accessResult";
 		
 		parameters.setScope("email, user_about_me, user_birthday, user_hometown, user_website, read_stream, read_friendlists");
 		parameters.setRedirectUri(sRedirectUrl);
@@ -85,7 +85,7 @@ public class FacebookController extends CommonService {
 	@RequestMapping(value = "/facebook/accessResult", method = RequestMethod.GET)
 	public String findFacebookAccessResult(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		String sAccessToken = ObjectUtils.toString(paramMap.get("code"));
-		String sRedirectUrl = "http://localhost:8080/facebook/accessResult";
+		String sRedirectUrl = "http://58.232.121.39:8080/facebook/accessResult";
 		String sReferer = request.getHeader("REFERER");
 		
 		AccessGrant accessGrant = auth2Operations.exchangeForAccess(sAccessToken, sRedirectUrl, null);
