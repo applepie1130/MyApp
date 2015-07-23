@@ -59,7 +59,7 @@ public class TwiiterController extends CommonService {
 		connectionFactory = (TwitterConnectionFactory) factoryLocator.getConnectionFactory(Twitter.class);
 		auth2Operations = (OAuth2Operations) connectionFactory.getOAuthOperations();
 		OAuth2Parameters parameters = new OAuth2Parameters();
-		String sRedirectUrl = "http://58.232.121.39:8080/twitter/accessResult";
+		String sRedirectUrl = "http://58.232.121.39/twitter/accessResult";
 		
 		parameters.setRedirectUri(sRedirectUrl);
 		
@@ -81,7 +81,7 @@ public class TwiiterController extends CommonService {
 	@RequestMapping(value = "/twitter/accessResult", method = RequestMethod.GET)
 	public String findTwitterAccessResult(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		String sAccessToken = ObjectUtils.toString(paramMap.get("code"));
-		String sRedirectUrl = "http://58.232.121.39:8080/twitter/accessResult";
+		String sRedirectUrl = "http://58.232.121.39/twitter/accessResult";
 		String sReferer = request.getHeader("REFERER");
 		
 //		AccessGrant accessGrant = auth2Operations.exchangeForAccess(sAccessToken, sRedirectUrl, null);
