@@ -23,14 +23,7 @@
 	<!-- [E] 정적자원관리 -->
 	
 	<!-- [S] Configurer config -->
-	<bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-        	<list>
-        		<!-- <value>/WEB-INF/spring/common.properties</value>  -->
-        		<value>classpath:/com/myapp/comm/common.properties</value>
-	        </list>
-        </property>
-    </bean>
+	<context:property-placeholder location="/WEB-INF/spring/common.properties" />
     <!-- [E] Configurer config -->
 	
 	<!-- [S] SQL DataSource config -->

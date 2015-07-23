@@ -3,10 +3,12 @@ package com.myapp.comm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
 
 @Configuration
+@PropertySource("/WEB-INF/spring/common.properties")
 public class CommonConfig {
 	@Value("${service.shutDownStartDt}")
 	private String serviceShutDownStartDt;
@@ -14,11 +16,8 @@ public class CommonConfig {
 	private String serviceShutDownEndDt;
 	
 	@Bean
-	public static PropertySourcesPlaceholderConfigurer properties() {
-		PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
-		configurer.setLocation(new ClassPathResource("/com/myapp/comm/common.properties"));
-		
-		return configurer;
+	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+		return new PropertySourcesPlaceholderConfigurer();
 	}
 	
 	/**
