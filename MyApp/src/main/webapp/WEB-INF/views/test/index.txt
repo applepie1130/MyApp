@@ -327,7 +327,7 @@
 				jQuery("#btn_LoginFacebook").bind("click", function(e) {
 					e.preventDefault();
 					
-					location.href="http://58.232.121.39:8080/facebook/login";
+					location.href="http://58.232.121.39/facebook/login";
 				});
 				
 				// Hidden Function

@@ -331,13 +331,13 @@
 				jQuery("#btn_LoginFacebook").bind("click", function(e) {
 					e.preventDefault();
 					
-					location.href="http://58.232.121.39:8080/facebook/login";
+					location.href="http://58.232.121.39/facebook/login";
 				});
 				
 				jQuery("#btn_LoginTwitter").bind("click", function(e) {
 					e.preventDefault();
 					
-					location.href="http://58.232.121.39:8080/twitter/login";
+					location.href="http://58.232.121.39/twitter/login";
 				});
 				
 				jQuery("#btn_PageOpenPop").bind("click", function(e) {
