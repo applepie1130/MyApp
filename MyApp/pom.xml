@@ -318,7 +318,7 @@
         		<configuration>
         			<path>/</path>
         			<mode>war</mode>
-        			<url>http://58.232.121.39/manager/text</url>
+        			<url>http://58.232.121.39:8080/manager/text</url>
         			<charset>UTF-8</charset>
         			<uriEncoding>UTF-8</uriEncoding>
         			<username>applepie1130</username>
